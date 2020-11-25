@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="style.css">
+  <title>Opret Bruger</title>
+</head>
+
+<body>
+
+<form action>
+  <p><a href="logIn.html">Skift til login-side</a></p>
+  <div class="container">
+    <h1>Opret bruger</h1>
+    <p>Udfyld venligst følgende formular for at oprette en bruger.</p>
+    <hr>
+    <label for="firstname"><b>Fornavn</b></label><br/>
+    <input type="text" placeholder="Indtast fornavn" name="firstname" id="firstname" required><br/>
+
+    <label for="lastname"><b>Efternavn</b></label><br/>
+    <input type="text" placeholder="Indtast efternavn" name="lastname" id="lastname" required><br/>
+
+    <label for="birthday"><b>Fødselsdagsdato</b></label><br/>
+    <input type="date" required><br/>
+
+    <label for="CPR"><b>CPR-nummer</b></label><br/>
+    <input type="number" placeholder="Indtast CPR-nummer" name="CPR" id="CPR" required><br/>
+
+    <label for="gender"><b>Køn</b></label><br/>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Mand</label><br/>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Kvinde</label><br/>
+    <input type="radio" id="other" name="gender" value="other">
+    <label for="other">Andet</label><br>
+
+    <label for="gender"><b>Min partners køn</b></label>
+    <br/>
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Mand</label><br/>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">Kvinde</label><br/>
+    <input type="radio" id="both" name="gender" value="both">
+    <label for="both">Begge dele</label><br>
+
+    <label for="interest"><b>Beskriv dig selv</b></label>
+    <br/>
+    <input type="checkbox" id="sport" name="interest" value="sport">
+    <label for="sport">Sport</label><br/>
+    <input type="checkbox" id="cooking" name="interest" value="cooking">
+    <label for="cooking">Madlavning</label><br/>
+    <input type="checkbox" id="needleWork" name="interest" value="needleWork">
+    <label for="needleWork">Håndarbejde</label><br>
+    <input type="checkbox" id="cars" name="interest" value="cars">
+    <label for="cars">Biler</label><br>
+    <input type="checkbox" id="volunteerWork" name="interest" value="volunteerWork">
+    <label for="volunteerWork">Frivilligt arbejde</label><br>
+    <input type="checkbox" id="politics" name="interest" value="politics">
+    <label for="politics">Politik</label><br>
+    <input type="checkbox" id="literature" name="interest" value="literature">
+    <label for="literature">Litteratur</label><br>
+    <input type="checkbox" id="travelling" name="interest" value="travelling">
+    <label for="travelling">Rejse</label><br>
+    <input type="checkbox" id="entertainment" name="interest" value="entertainment">
+    <label for="entertainment">Underholdning</label><br>
+    <input type="checkbox" id="nature" name="interest" value="nature">
+    <label for="nature">Natur</label><br>
+    <input type="checkbox" id="culture" name="interest" value="culture">
+    <label for="culture">Kultur</label><br>
+    <input type="checkbox" id="art" name="interest" value="art">
+    <label for="art">Kunst</label><br>
+    <input type="checkbox" id="study" name="interest" value="study">
+    <label for="study">Studie</label><br>
+    <input type="checkbox" id="work" name="interest" value="work">
+    <label for="work">Arbejde</label><br>
+
+    <label for="email"><b>Email</b></label>
+    <input type="email" placeholder="Indtast e-mail" name="email" id="email" required><br/>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" style="margin-bottom: 0" placeholder="Opret password" name="psw" id="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Skal indeholde tal, store og små bogstaver samt være mindst 8 tegn."required>
+  
+    <div id="message">
+    <span style="margin-top: 0; padding:0">Skal indeholde</span>
+    <span id="letter" class="invalid">små bogstaver<span style="color:black">,</span></span>
+    <span id="capital" class="invalid">store bogstaver<span style="color:black">,</span></span>
+    <span id="number" class="invalid">tal<span style="color:black">,</span></span>
+    <span id="length" class="invalid">minimum 8 tegn<span style="color:black">.</span></span>
+    </div>
+
+    <label for="img" style="font-weight: bold; display: inline-block; margin-top: 30px; margin-bottom: 0px;">Vedhæft billede</label>
+    <input type="file" id="img" name="img" accept="image/*">
+
+    <hr>
+    <button type="submit" class="registerbtn"><a href="frontPage.html">Opret Bruger</a>Opret bruger</button>
+  </div>  
+</form>
+  
+</body>
+
+  <script src="javascript.js"></script>
+
+</html>

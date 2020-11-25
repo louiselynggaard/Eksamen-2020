@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velkommen - log in</title>
+</head>
+<body>
+    <form action>
+        <div class="container">
+          <h1>Velkommen</h1>
+          <p>Udfyld venligst følgende formular for at logge in.</p>
+          <hr>
+          <label for="email"><b>E-mail</b></label>
+          <input type="email" placeholder="Indtast e-mail" name="email" id="email" required>
+      
+          <label for="psw"><b>Password</b></label>
+          <input type="password" style="margin-bottom: 0" placeholder="Opret password" name="psw" id="psw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Skal indeholde tal, store og små bogstaver samt være mindst 8 tegn."required>
+
+          <hr>
+          <button type="submit" class="loginbtn"><a href="frontPage.html">Log in</a>Log In</button>
+
+          <p>Ikke bruger endnu? Opret bruger <a href="createUser.html">her</a>.</p>
+        </div>  
+      </form>
+</body>
+</html>
