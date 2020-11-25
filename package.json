@@ -1,0 +1,25 @@
+{
+  "name": "eksamen-2020",
+  "version": "1.0.0",
+  "description": "This is my exam in programming 2020",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/louiselynggaard/Eksamen-2020.git"
+  },
+  "keywords": [
+    "exam"
+  ],
+  "author": "Louise Lynggaard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/louiselynggaard/Eksamen-2020/issues"
+  },
+  "homepage": "https://github.com/louiselynggaard/Eksamen-2020#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
