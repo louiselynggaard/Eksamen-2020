@@ -3,9 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dating App</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.js"></script> <!--Forudsætning for at bruge Vue-->
+
 </head>
 <body>
-    <p>Tester om serveren viser HTML-siden.</p>
+    <div id="app">
+
+        <div class="header">
+            <div v-html="pageTitle"></div>
+        </div>
+
+        <div class="container">
+            <div v-if="showContainer=='Create'">
+                <div>
+                    <label class="label1"><span>Navn</span><input type="text" v-model="createUser.name" required></label><br>
+                    <label class="label1"><span>Fødselsdag</span><input type="date" v-model="createUser.dateOfBirth" required></label><br>
+                    <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode" required></label><br>
+                    <label class="label1"><span>Email</span><input type="email" v-model="createUser.email" required></label><br>
+                    <label class="label1"><span>Password</span><input type="password" v-model="createUser.password" required></label><br>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            methods: {
+
+            },
+            computed: {
+                pageTitle: function () { //hvis følgende container er kaldt, ændres sidens titel herefter.
+                if (this.showContainer == 'Create') return '<span style="font-size:24px">Opret Bruger</span><br/>Udfyld følgende form for at oprette en bruger';
+                return this.showContainer; //hvis ikke der er kaldt en container, vises default som vist i data
+            }
+            },
+            data: { //hvad skal som default altid være udfyldt på siden
+                showContainer: 'Create',
+
+                createUser: {
+                    name: '',
+                    dateOfBirth: '',
+                    zipCode: '',
+                    email: '',
+                    password: ''
+                },
+            }
+        });
+    </script>
 </body>
 </html>
