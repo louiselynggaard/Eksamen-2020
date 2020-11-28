@@ -1,4 +1,12 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+
 const app = express();
-app.listen(3000, () => console.log('Listening af port 3000')); 
-app.use(express.static('Public'));
+
+app.use(express.static(__dirname + '/views'));
+
+let port = 3000;
+app.listen(port, () => {
+    console.log('Listening af port ' + port); 
+});
