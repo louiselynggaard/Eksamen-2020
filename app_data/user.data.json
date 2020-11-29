@@ -1,5 +1,5 @@
 {
-    "lastUserId": 4,
+    "lastUserId": 6,
     "userList": [
         {
             "id": "1",
@@ -32,6 +32,22 @@
             "zipCode": "2000",
             "email": "rip@gmail.com",
             "password": "Rip1234"
+        },
+        {
+            "id": "5",
+            "name": "Rup",
+            "dateOfBirth": "2020-11-26",
+            "zipCode": "2000",
+            "email": "rup@gmail.com",
+            "password": "Rup1234"
+        },
+        {
+            "id": "6",
+            "name": "Rap",
+            "dateOfBirth": "2020-11-20",
+            "zipCode": "2000",
+            "email": "rap@gmail.com",
+            "password": "Rap1234"
         }
     ]
 }
