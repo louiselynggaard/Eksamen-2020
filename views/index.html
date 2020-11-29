@@ -48,7 +48,33 @@
         var vm = new Vue({
             el: '#app',
             methods: {
-                
+                clickCreate: function () {
+                    var requestOptions = {
+                        method: "POST", //CREATE
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indicates the content. UTF-8 = der kan skrive æøå
+                        body: JSON.stringify(this.createUser)
+                    };
+                    
+                    this.error = null;
+                    fetch('/api/user/create', requestOptions)
+                    .then(async response => {
+
+                        //tjekker om der er fejl i svaret
+                        if (!response.ok) { //hvis der fås et svar med statuskode >299
+                            const data = await response.text(); //svaret kommer retur som tekst og ikke en JSON-fil = fejl
+                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                            return Promise.reject(error); //throw error to catch
+                        }
+
+                        const data = await response.json();
+                        this.createUser = data;
+                        this.createSuccess = this.createUser.name + ' was created successfully';
+                    })
+                    .catch(error => {
+                        alert(error);
+                    });
+                }
+
             },
             computed: {
                 pageTitle: function () { //hvis følgende container er kaldt, ændres sidens titel herefter.
@@ -61,6 +87,18 @@
             },
             data: { //hvad skal som default altid være udfyldt på siden
                 showContainer: 'Create', //denne side vises, når man tilgår siden localhost:3000/
+
+                error: null,
+
+                createUser: {
+                    name: '',
+                    dateOfBirth: '',
+                    zipCode: '',
+                    email: '',
+                    password: ''
+                },
+
+                createSuccess: ''
 
             }
         });

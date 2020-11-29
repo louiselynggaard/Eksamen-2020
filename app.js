@@ -12,5 +12,5 @@ app.use('/api/user', userRoute);
 
 let port = 3000;
 app.listen(port, () => {
-    console.log('Listening af port ' + port); 
+    console.log('Listening at port ' + port); 
 });
