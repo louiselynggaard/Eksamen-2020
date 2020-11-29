@@ -16,6 +16,10 @@
         </div>
 
         <div class="container">
+            <div v-if="showContainer=='Login'">
+
+            </div>
+
             <div v-if="showContainer=='Create'">
                 <div>
                     <label class="label1"><span>Navn</span><input type="text" v-model="createUser.name" required></label><br>
@@ -23,7 +27,18 @@
                     <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode" required></label><br>
                     <label class="label1"><span>Email</span><input type="email" v-model="createUser.email" required></label><br>
                     <label class="label1"><span>Password</span><input type="password" v-model="createUser.password" required></label><br>
+
+                    <div style="text-align: left;">
+                        <button @click="clickCreate()">Opret bruger</button>            
+                    </div>
                 </div>
+            </div>
+
+            <div v-if="showContainer=='Frontpage'">
+
+            </div>
+
+            <div v-if="showContainer=='MyProfile'">
 
             </div>
         </div>
@@ -33,24 +48,20 @@
         var vm = new Vue({
             el: '#app',
             methods: {
-
+                
             },
             computed: {
                 pageTitle: function () { //hvis følgende container er kaldt, ændres sidens titel herefter.
+                if (this.showContainer == 'Login') return '<span style="font-size:24px">Velkommen</span><br/>Udfyld følgende form for at logge ind';
                 if (this.showContainer == 'Create') return '<span style="font-size:24px">Opret Bruger</span><br/>Udfyld følgende form for at oprette en bruger';
+                if (this.showContainer == 'FrontPage') return '<span style="font-size:24px">Forside</span><br/>Like for match, dislike for at passere';
+                if (this.showContainer == 'MyProfile') return '<span style="font-size:24px">Min profil</span><br/>Opdatér din profil her';
                 return this.showContainer; //hvis ikke der er kaldt en container, vises default som vist i data
             }
             },
             data: { //hvad skal som default altid være udfyldt på siden
-                showContainer: 'Create',
+                showContainer: 'Create', //denne side vises, når man tilgår siden localhost:3000/
 
-                createUser: {
-                    name: '',
-                    dateOfBirth: '',
-                    zipCode: '',
-                    email: '',
-                    password: ''
-                },
             }
         });
     </script>
