@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+//const fs = require('fs');
+//const http = require('http');
+//console.log(http.METHODS); //Viser alle tilgængelige http-metoder vdr. API'er.
+//console.log(http.STATUS_CODES); //Viser alle tilgængelige hhtp-statuskoder - forespørgsler fra browseren til serveren.
 
 const app = express();
 

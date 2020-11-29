@@ -31,6 +31,10 @@
                     <div style="text-align: left;">
                         <button @click="clickCreate()">Opret bruger</button>            
                     </div>
+
+                    <div style="text-align: left;">
+                        {{createSuccess}} <!--Henter data fra Vue-funktion clickCreate + Vue-data-->
+                    </div>
                 </div>
             </div>
 
@@ -60,7 +64,7 @@
                     .then(async response => {
 
                         //tjekker om der er fejl i svaret
-                        if (!response.ok) { //hvis der fås et svar med statuskode >299
+                        if (!response.ok) { //hvis der fås et svar med statuskode >299 = fejl
                             const data = await response.text(); //svaret kommer retur som tekst og ikke en JSON-fil = fejl
                             const error = response.status + ': ' + ((data && data.message) || response.statusText);
                             return Promise.reject(error); //throw error to catch
@@ -86,7 +90,7 @@
             }
             },
             data: { //hvad skal som default altid være udfyldt på siden
-                showContainer: 'Create', //denne side vises, når man tilgår siden localhost:3000/
+                showContainer: 'Create', //denne side/container vises, når man tilgår siden localhost:3000/
 
                 error: null,
 

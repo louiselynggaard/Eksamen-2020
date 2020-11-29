@@ -1,6 +1,37 @@
 {
-    "lastUserId": 0,
+    "lastUserId": 4,
     "userList": [
-
+        {
+            "id": "1",
+            "name": "Micky Mouse",
+            "dateOfBirth": "1935-09-10",
+            "zipCode": "2000",
+            "email": "mickymouse@gmail.com",
+            "password": "Micky1234"
+        },
+        {
+            "id": "2",
+            "name": "Anders And",
+            "dateOfBirth": "1935-09-05",
+            "zipCode": "2000",
+            "email": "andersand@gmail.com",
+            "password": "Anders1234"
+        },
+        {
+            "id": "3",
+            "name": "Minnie Mouse",
+            "dateOfBirth": "2020-11-07",
+            "zipCode": "2000",
+            "email": "minniemouse@gmail.com",
+            "password": "Minnie1234"
+        },
+        {
+            "id": "4",
+            "name": "Rip",
+            "dateOfBirth": "2020-10-27",
+            "zipCode": "2000",
+            "email": "rip@gmail.com",
+            "password": "Rip1234"
+        }
     ]
 }
