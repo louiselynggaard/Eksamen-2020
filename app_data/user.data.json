@@ -1,5 +1,5 @@
 {
-    "lastUserId": 6,
+    "lastUserId": 10,
     "userList": [
         {
             "id": "1",
@@ -48,6 +48,30 @@
             "zipCode": "2000",
             "email": "rap@gmail.com",
             "password": "Rap1234"
+        },
+        {
+            "id": "7",
+            "name": "",
+            "dateOfBirth": "",
+            "zipCode": "",
+            "email": "",
+            "password": ""
+        },
+        {
+            "id": "8",
+            "name": "Fedtmule",
+            "dateOfBirth": "2020-11-17",
+            "zipCode": "2000",
+            "email": "fedtmule@gmail.com",
+            "password": "Fedtmule1234"
+        },
+        {
+            "id": "9",
+            "name": "Andersine",
+            "dateOfBirth": "2020-10-30",
+            "zipCode": "2000",
+            "email": "andersine@gmail.com",
+            "password": "Andersine1234"
         }
     ]
 }
