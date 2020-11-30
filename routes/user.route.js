@@ -5,8 +5,8 @@ const controller = require('../controllers/user.controller');
 
 //READ (get)
 router.get('/login/:email', controller.user_login);
-router.get('/likes', controller.user_likes); 
-router.get('/matches', controller.user_matches);
+//router.get('/likes', controller.user_likes); 
+router.get('/likes/list', controller.user_likes_list);
 
 //CREATE (post)
 router.post('/create', controller.user_create);

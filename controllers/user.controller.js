@@ -35,11 +35,12 @@ exports.user_login = function (req, res) {
         res.send(user)
 };
 
-exports.user_likes = function (req, res) {
+exports.user_likes_list = function (req, res) {
     //console.log('user_likes:', userData.userList);
 
     //Hvilket id/index har jeg?
     var myIndex = getMyIndex(req); //tester på den første i array
+    var myId = userData.userList[myIndex].id;
 
     //Hvem har jeg liket?
     var myLikeIdList = userData.userList[myIndex].likeIdList;
@@ -47,24 +48,27 @@ exports.user_likes = function (req, res) {
     //For loop, der gennemgår alle i databasen
     var responseList = [];
     for (i=0; i<userData.userList.length; i++) { 
+        let otherUser = userData.userList[i];
         //Er det mit eget id, så spring over
-        if (userData.userList[i].id == userData.userList[myIndex].id)
+        if (otherUser.id == myId)
             continue;
         
         //Har jeg liket id'et, adderes dette til nyt array
-        if (myLikeIdList.includes(userData.userList[i].id)) {
-            var mutualMatch = false;
-            responseList.push({name: userData.userList[i].name, dateOfBirth: userData.userList[i].dateOfBirth, zipCode: userData.userList[i].zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
+        if (myLikeIdList.includes(otherUser.id)) {
+            let mutualMatch = otherUser.likeIdList.includes(myId);
+            
+            responseList.push({name: otherUser.name, dateOfBirth: otherUser.dateOfBirth, zipCode: otherUser.zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
         }
     }
     //Returner nyt array
     res.send(responseList);
 };
-
-exports.user_matches = function (req, res) {
-    console.log('user_matches:', userData.userList);
+ /*
+exports.user_likes_list = function (req, res) {
+    console.log('user_list:', userData.userList);
     res.send(userData.userList)
 };
+*/
 
 //CREATE
 exports.user_create = function (req, res) {
@@ -103,7 +107,7 @@ exports.user_update = function (req, res) {
 
     writeUserData();
 
-    res.send(user)
+    res.send(user);
 };
 
 //DELETE
@@ -117,5 +121,5 @@ exports.user_delete = function (req, res) {
 
     writeUserData();
 
-    res.send(user)
+    res.send(user);
 };

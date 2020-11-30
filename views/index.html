@@ -92,8 +92,14 @@
 
             <div v-if="showContainer=='MyMatches'">
                 <div class="label1">
-                    <p>Brugere jeg har matchet med</p>
                     <p>Brugere jeg har liket</p>
+                    <div class="label1">
+                        <button @click="clickLikesList">Brugere jeg har liket</button><br>
+                        <div v-for="elm in likesListResult">
+                            <span>name: {{elm.name}}, dateOfBirth: {{elm.dateOfBirth}}, zipCode: {{elm.zipCode}}, match: {{elm.match}}</span>
+                            <button>Slet</button>
+                        </div>                           
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,6 +132,31 @@
                     .catch(error => {
                         alert(error);
                     });
+                },
+
+                clickLikesList: function () {
+                    var requestOptions = {
+                    method: 'GET'
+                };
+
+                this.testError = null;
+                // GET request using fetch with error handling
+                fetch('/api/user/likes/list', requestOptions)
+                .then(async response => {
+
+                    // check for error response
+                    if (!response.ok) {
+                        const data = await response.text();
+                        // get error message from body or default to response statusText
+                        const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                        return Promise.reject(error); // throw error to catch
+                    }
+
+                    this.likesListResult = await response.json();
+                })
+                .catch(error => {
+                    alert(error);
+                });
                 },
 
                 clickCreate: function () {
@@ -219,7 +250,9 @@
                     dateOfBirth: '2020-05-07',
                     zipCode: '2000',
                     description: 'Jeg er altid sur'
-                }
+                },
+
+                likesListResult: ''
             }
         });
     </script>

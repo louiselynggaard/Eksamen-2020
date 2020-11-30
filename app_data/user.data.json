@@ -10,7 +10,7 @@
             "password": "Anders1234",
             "description": "Jeg er altid pisse sur.",
             "likeIdList": [
-                "2"
+                "3", "5", "4"
             ]
         },
         {
@@ -22,7 +22,7 @@
             "password": "Minnie1234",
             "description": "Jeg har kæreste med Mickey Mouse",
             "likeIdList": [
-                "1"
+                "1", "2"
             ]
         },
         {
