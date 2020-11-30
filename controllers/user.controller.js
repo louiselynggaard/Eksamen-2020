@@ -18,7 +18,7 @@ function writeUserData() { //overskriver alt hvad der er i user.data.json med ny
     });
 };
 
-function getMyIndex(req) {
+function getMyIndex(req) { //index på aktiv login-bruger er hårdkodet for at oprette resterende funktioner
     return 0;
 };
 
@@ -88,14 +88,10 @@ exports.user_create = function (req, res) {
 
 //UPDATE
 exports.user_update = function (req, res) {
-    let index = userData.userList.findIndex(x => x.email === req.params.email);
-    if (index == -1) {
-        console.log('user_update, 404');
-        res.status(404).send('email '+req.params.email+' not found');
-        return;
-    }
+    let myIndex = getMyIndex();
 
-    let user = userData.userList[index];
+    let user = userData.userList[myIndex];
+
     user.name = req.body.name;
     user.dateOfBirth = req.body.dateOfBirth;
     user.zipCode = req.body.zipCode;
@@ -112,7 +108,7 @@ exports.user_update = function (req, res) {
 
 //DELETE
 exports.user_delete = function (req, res) {
-    var myIndex = getMyIndex(req);
+    let myIndex = getMyIndex(req);
 
     let user = userData.userList[myIndex];
 

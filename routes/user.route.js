@@ -12,7 +12,7 @@ router.get('/matches', controller.user_matches);
 router.post('/create', controller.user_create);
 
 //UPDATE (put)
-router.put('/update/:email', controller.user_update);
+router.put('/update', controller.user_update);
 
 //DELETE (delete)
 router.delete('/delete', controller.user_delete);
