@@ -18,6 +18,10 @@ function writeUserData() { //overskriver alt hvad der er i user.data.json med ny
     });
 };
 
+function getMyIndex(req) {
+    return 0;
+};
+
 var userData = readUserData(); //variablen userData oprettes ud fra det funktionen finder i json-filen/"databasen" user.data.json
 
 //READ
@@ -35,7 +39,7 @@ exports.user_likes = function (req, res) {
     //console.log('user_likes:', userData.userList);
 
     //Hvilket id/index har jeg?
-    var myIndex = 0; //tester på den første i array
+    var myIndex = getMyIndex(req); //tester på den første i array
 
     //Hvem har jeg liket?
     var myLikeIdList = userData.userList[myIndex].likeIdList;
@@ -48,8 +52,10 @@ exports.user_likes = function (req, res) {
             continue;
         
         //Har jeg liket id'et, adderes dette til nyt array
-        if (myLikeIdList.includes(userData.userList[i].id))
-            responseList.push({name: userData.userList[i].name, dateOfBirth: userData.userList[i].dateOfBirth, zipCode: userData.userList[i].zipCode}); //objektet indeholder kun tilgængeligt data
+        if (myLikeIdList.includes(userData.userList[i].id)) {
+            var mutualMatch = false;
+            responseList.push({name: userData.userList[i].name, dateOfBirth: userData.userList[i].dateOfBirth, zipCode: userData.userList[i].zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
+        }
     }
     //Returner nyt array
     res.send(responseList);
@@ -68,7 +74,8 @@ exports.user_create = function (req, res) {
         req.body.dateOfBirth,
         req.body.zipCode,
         req.body.email,
-        req.body.password
+        req.body.password,
+        req.body.description
     );
 
     userData.userList.push(user); //indsæt som statisk data i JSON-fil

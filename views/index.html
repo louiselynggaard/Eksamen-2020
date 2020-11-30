@@ -36,30 +36,27 @@
 
             <div v-if="showContainer=='Create'">
                 <div>
-                    <label class="label1"><span>Navn</span><input type="text" v-model="createUser.name" required></label><br>
-                    <label class="label1"><span>Fødselsdag</span><input type="date" v-model="createUser.dateOfBirth" required></label><br>
-                    <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode" required></label><br>
-                    <label class="label1"><span>Email</span><input type="email" v-model="createUser.email" required></label><br>
-                    <label class="label1"><span>Password</span><input type="password" v-model="createUser.password" required></label><br>
-                    <label class="label1"><span>Beskriv dig selv</span><input type="text" v-model="createUser.description" required></label><br>
+                    <form @submit.prevent="clickCreate()"> <!--Formen submittes ikke - i stedet kører funktionen clickCreate(). Form-tagget skyldes brug af "required"-->
+                        <label class="label1"><span>Navn</span><input type="text" v-model="createUser.name" required></label><br>
+                        <label class="label1"><span>Fødselsdag</span><input type="date" v-model="createUser.dateOfBirth" required></label><br>
+                        <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode" required></label><br>
+                        <label class="label1"><span>Email</span><input type="email" v-model="createUser.email" required></label><br>
+                        <label class="label1"><span>Password</span><input type="password" v-model="createUser.password" required></label><br>
+                        <label class="label1"><span>Beskriv dig selv</span><input type="text" v-model="createUser.description" required></label><br>
 
-                    <div style="text-align: left;">
-                        <button @click="clickCreate()">Opret bruger</button>            
-                    </div>
+                        <div style="text-align: left;">
+                            <button type="submit">Opret bruger</button>            
+                        </div>
 
-                    <div style="text-align: left;">
-                        <button @click="showContainer='Login'">Allerede bruger? Login her</button>
-                    </div>
-                    <!--
-                    <div style="text-align: left;">
-                        {{createSuccess}} 
-                    </div>
-                    -->
+                        <div style="text-align: left;">
+                            <button @click="showContainer='Login'">Allerede bruger? Login her</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
             <div v-if="showContainer=='FrontPage'">
-                <label class="label1"><span>{{user.name}}, {{user.dateOfBirth}}, {{user.zipCode}}</span></label>
+                <label class="label1"><span>{{user.name}}, {{user.dateOfBirth}}, {{user.zipCode}}, {{user.description}}</span></label>
                 <div style="text-align: left;">
                     <button @click="">Like</button>
                     <button @click="">Dislike</button> 
@@ -175,8 +172,9 @@
 
                 user: {
                     name: 'Anders And',
-                    dateOfBirth: '',
-                    zipCode: ''
+                    dateOfBirth: '2020-05-07',
+                    zipCode: '2000',
+                    description: 'Jeg er altid sur'
                 }
             }
         });
