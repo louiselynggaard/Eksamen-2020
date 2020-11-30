@@ -51,14 +51,6 @@
         },
         {
             "id": "7",
-            "name": "",
-            "dateOfBirth": "",
-            "zipCode": "",
-            "email": "",
-            "password": ""
-        },
-        {
-            "id": "8",
             "name": "Fedtmule",
             "dateOfBirth": "2020-11-17",
             "zipCode": "2000",
@@ -66,7 +58,7 @@
             "password": "Fedtmule1234"
         },
         {
-            "id": "9",
+            "id": "8",
             "name": "Andersine",
             "dateOfBirth": "2020-10-30",
             "zipCode": "2000",

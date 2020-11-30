@@ -3,7 +3,7 @@ const fs = require('fs'); //node.js filesystem gør det muligt at læse, oprette
 const User = require('../models/user.model'); //klasse hentes fra denne mappe.
 
 function readUserData() { //sørger for at hver gang serveren startes, så loades alt hvad der er tilgængeligt i "databasen" user.data.json
-    let fileData = fs.readFileSync('./app_data/user.data.json', 'utf8', function (err) {
+    let fileData = fs.readFileSync('./app_data/user.data.json', 'utf8', function (err) { //fs.readFileSync er en del af node.js-bibliotek. SYNC gør at serveren "blokeres" indtil ordren er udført. Serveren lytter ikke på andet imens. Det kan den ved redFile()
         if (err) return console.log(err);
     });
        
@@ -20,6 +20,18 @@ function writeUserData() { //overskriver alt hvad der er i user.data.json med ny
 
 var userData = readUserData(); //variablen userData oprettes ud fra det funktionen finder i json-filen/"databasen" user.data.json
 
+//READ
+exports.user_login = function (req, res) {
+    let user = userData.userList.find(x => x.email === req.params.email);
+    console.log('user_login, user:', user);
+
+    if (user == undefined)
+        res.status(204).send();
+    else 
+        res.send(user)
+};
+
+//CREATE
 exports.user_create = function (req, res) {
     let user = new User( //der oprettes en ny bruger på baggrund af klassen "User" i user.model.js
         (++userData.lastUserId).toString(), //når der oprettes en ny bruger, tildeles den et id, som tæller fra de i forvejen oprettede brugeres id'er. 
