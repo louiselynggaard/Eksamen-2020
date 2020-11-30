@@ -8,7 +8,8 @@
             "zipCode": "2000",
             "email": "mickymouse@gmail.com",
             "password": "Micky1234",
-            "description": "ghdfghdfk"
+            "description": "Jeg er ældst",
+            "likeIdList": ["3"]
         },
         {
             "id": "2",
@@ -17,7 +18,8 @@
             "zipCode": "2000",
             "email": "andersand@gmail.com",
             "password": "Anders1234",
-            "description": "Jeg er altid sur"
+            "description": "Jeg er altid sur",
+            "likeIdList": ["2"]
         },
         {
             "id": "3",
@@ -26,7 +28,8 @@
             "zipCode": "2000",
             "email": "minniemouse@gmail.com",
             "password": "Minnie1234",
-            "description": "ghdfghdfk"
+            "description": "Jeg har kæreste med Micky Mouse",
+            "likeIdList": ["1"]
         },
         {
             "id": "4",
@@ -35,25 +38,28 @@
             "zipCode": "2000",
             "email": "rip@gmail.com",
             "password": "Rip1234",
-            "description": "ghdfghdfk"
+            "description": "Jeg har to brødre",
+            "likeIdList": ["2"]
         },
         {
             "id": "5",
-            "name": "Rup",
-            "dateOfBirth": "2020-11-26",
-            "zipCode": "2000",
-            "email": "rup@gmail.com",
-            "password": "Rup1234",
-            "description": "ghdfghdfk"
-        },
-        {
-            "id": "6",
             "name": "Rap",
-            "dateOfBirth": "2020-11-20",
+            "dateOfBirth": "2020-11-26",
             "zipCode": "2000",
             "email": "rap@gmail.com",
             "password": "Rap1234",
-            "description": "ghdfghdfk"
+            "description": "Jeg har to brødre",
+            "likeIdList": ["3"]
+        },
+        {
+            "id": "6",
+            "name": "Rup",
+            "dateOfBirth": "2020-11-20",
+            "zipCode": "2000",
+            "email": "rup@gmail.com",
+            "password": "Rup1234",
+            "description": "Jeg har to brødre",
+            "likeIdList": ["4"]
         },
         {
             "id": "7",
@@ -62,7 +68,8 @@
             "zipCode": "2000",
             "email": "fedtmule@gmail.com",
             "password": "Fedtmule1234",
-            "description": "ghdfghdfk"
+            "description": "Jeg har en hund",
+            "likeIdList": ["5"]
         },
         {
             "id": "8",
@@ -71,7 +78,8 @@
             "zipCode": "2000",
             "email": "andersine@gmail.com",
             "password": "Andersine1234",
-            "description": "ghdfghdfk"
+            "description": "Jeg er kæreste med Anders And",
+            "likeIdList": ["2"]
         }
     ]
 }

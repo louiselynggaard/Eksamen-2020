@@ -31,6 +31,35 @@ exports.user_login = function (req, res) {
         res.send(user)
 };
 
+exports.user_likes = function (req, res) {
+    //console.log('user_likes:', userData.userList);
+
+    //Hvilket id/index har jeg?
+    var myIndex = 0; //tester på den første i array
+
+    //Hvem har jeg liket?
+    var myLikeIdList = userData.userList[myIndex].likeIdList;
+    
+    //For loop, der gennemgår alle i databasen
+    var responseList = [];
+    for (i=0; i<userData.userList.length; i++) { 
+        //Er det mit eget id, så spring over
+        if (userData.userList[i].id == userData.userList[myIndex].id)
+            continue;
+        
+        //Har jeg liket id'et, adderes dette til nyt array
+        if (myLikeIdList.includes(userData.userList[i].id))
+            responseList.push({name: userData.userList[i].name, dateOfBirth: userData.userList[i].dateOfBirth, zipCode: userData.userList[i].zipCode}); //objektet indeholder kun tilgængeligt data
+    }
+    //Returner nyt array
+    res.send(responseList);
+};
+
+exports.user_matches = function (req, res) {
+    console.log('user_matches:', userData.userList);
+    res.send(userData.userList)
+};
+
 //CREATE
 exports.user_create = function (req, res) {
     let user = new User( //der oprettes en ny bruger på baggrund af klassen "User" i user.model.js
@@ -74,6 +103,7 @@ exports.user_update = function (req, res) {
     res.send(user)
 };
 
+//DELETE
 exports.user_delete = function (req, res) {
     let user = null;
     let index = userData.userList.findIndex(x => x.email === req.params.email);

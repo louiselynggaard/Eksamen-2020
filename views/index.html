@@ -30,7 +30,7 @@
                     </div>
 
                     <div style="text-align: left;">
-                        <p>Ikke bruger endnu?</p><div><button @click="showContainer='Create'">Opret dig her!</button></div>
+                        <p>Ikke bruger endnu?</p><div><button @click="showContainer='Create'">Opret dig her</button></div>
                     </div>
             </div>
 
@@ -46,6 +46,10 @@
                     <div style="text-align: left;">
                         <button @click="clickCreate()">Opret bruger</button>            
                     </div>
+
+                    <div style="text-align: left;">
+                        <button @click="showContainer='Login'">Allerede bruger? Login her</button>
+                    </div>
                     <!--
                     <div style="text-align: left;">
                         {{createSuccess}} 
@@ -54,7 +58,7 @@
                 </div>
             </div>
 
-            <div v-if="showContainer=='Frontpage'">
+            <div v-if="showContainer=='FrontPage'">
                 <label class="label1"><span>{{user.name}}, {{user.dateOfBirth}}, {{user.zipCode}}</span></label>
                 <div style="text-align: left;">
                     <button @click="">Like</button>
@@ -63,11 +67,18 @@
             </div>
 
             <div v-if="showContainer=='MyProfile'">
-                
+                <div class="label1">
+                    <p>Opdatér min profil her</p>
+                    <p>Slet min profil her</p>
+                    <p>Log ud</p>
+                </div>
             </div>
 
             <div v-if="showContainer=='MyMatches'">
-
+                <div class="label1">
+                    <p>Brugere jeg har matchet med</p>
+                    <p>Brugere jeg har liket</p>
+                </div>
             </div>
         </div>
 
@@ -94,7 +105,7 @@
 
                         const data = await response.json();
                         this.loginUser = data;
-                        this.showContainer = 'Frontpage';
+                        this.showContainer = 'FrontPage';
                     })
                     .catch(error => {
                         alert(error);
@@ -121,7 +132,7 @@
 
                         const data = await response.json();
                         this.createUser = data;
-                        this.showContainer='Frontpage';
+                        this.showContainer='FrontPage';
                         //this.createSuccess = this.createUser.name + ' was created successfully';
                     })
                     .catch(error => {
@@ -160,10 +171,10 @@
                     description: ''
                 },
 
-                createSuccess: '',
+                //createSuccess: '',
 
                 user: {
-                    name: '',
+                    name: 'Anders And',
                     dateOfBirth: '',
                     zipCode: ''
                 }
