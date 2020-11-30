@@ -1,5 +1,5 @@
 {
-    "lastUserId": 10,
+    "lastUserId": 8,
     "userList": [
         {
             "id": "1",
@@ -7,15 +7,17 @@
             "dateOfBirth": "1935-09-10",
             "zipCode": "2000",
             "email": "mickymouse@gmail.com",
-            "password": "Micky1234"
+            "password": "Micky1234",
+            "description": "ghdfghdfk"
         },
         {
             "id": "2",
             "name": "Anders And",
-            "dateOfBirth": "1935-09-05",
+            "dateOfBirth": "2020-05-05",
             "zipCode": "2000",
             "email": "andersand@gmail.com",
-            "password": "Anders1234"
+            "password": "Anders1234",
+            "description": "Jeg er altid sur."
         },
         {
             "id": "3",
@@ -23,7 +25,8 @@
             "dateOfBirth": "2020-11-07",
             "zipCode": "2000",
             "email": "minniemouse@gmail.com",
-            "password": "Minnie1234"
+            "password": "Minnie1234",
+            "description": "ghdfghdfk"
         },
         {
             "id": "4",
@@ -31,7 +34,8 @@
             "dateOfBirth": "2020-10-27",
             "zipCode": "2000",
             "email": "rip@gmail.com",
-            "password": "Rip1234"
+            "password": "Rip1234",
+            "description": "ghdfghdfk"
         },
         {
             "id": "5",
@@ -39,7 +43,8 @@
             "dateOfBirth": "2020-11-26",
             "zipCode": "2000",
             "email": "rup@gmail.com",
-            "password": "Rup1234"
+            "password": "Rup1234",
+            "description": "ghdfghdfk"
         },
         {
             "id": "6",
@@ -47,7 +52,8 @@
             "dateOfBirth": "2020-11-20",
             "zipCode": "2000",
             "email": "rap@gmail.com",
-            "password": "Rap1234"
+            "password": "Rap1234",
+            "description": "ghdfghdfk"
         },
         {
             "id": "7",
@@ -55,7 +61,8 @@
             "dateOfBirth": "2020-11-17",
             "zipCode": "2000",
             "email": "fedtmule@gmail.com",
-            "password": "Fedtmule1234"
+            "password": "Fedtmule1234",
+            "description": "ghdfghdfk"
         },
         {
             "id": "8",
@@ -63,7 +70,8 @@
             "dateOfBirth": "2020-10-30",
             "zipCode": "2000",
             "email": "andersine@gmail.com",
-            "password": "Andersine1234"
+            "password": "Andersine1234",
+            "description": "ghdfghdfk"
         }
     ]
 }

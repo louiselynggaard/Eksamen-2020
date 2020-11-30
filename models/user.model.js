@@ -1,11 +1,12 @@
 class User { //brugernes indhold defineres
-    constructor(id, name, dateOfBirth, zipCode, email, password) { //CREATE
+    constructor(id, name, dateOfBirth, zipCode, email, password, description) { //CREATE
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.zipCode = zipCode;
         this.email = email;
         this.password = password;
+        this.description = description;
     };
 };
 

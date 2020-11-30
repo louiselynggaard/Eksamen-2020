@@ -28,8 +28,9 @@
                     <div style="text-align: left;">
                         <button @click="showContainer='FrontPage'">Login</button>
                     </div>
+
                     <div style="text-align: left;">
-                        <p>Ikke bruger endnu?</p> <div><button @click="showContainer='Create'">Opret dig her!</button></div>
+                        <p>Ikke bruger endnu?</p><div><button @click="showContainer='Create'">Opret dig her!</button></div>
                     </div>
             </div>
 
@@ -40,14 +41,16 @@
                     <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode" required></label><br>
                     <label class="label1"><span>Email</span><input type="email" v-model="createUser.email" required></label><br>
                     <label class="label1"><span>Password</span><input type="password" v-model="createUser.password" required></label><br>
+                    <label class="label1"><span>Beskriv dig selv</span><input type="text" v-model="createUser.description" required></label><br>
 
                     <div style="text-align: left;">
                         <button @click="clickCreate()">Opret bruger</button>            
                     </div>
-
+                    <!--
                     <div style="text-align: left;">
-                        {{createSuccess}} <!--Henter data fra Vue-funktion clickCreate + Vue-data-->
+                        {{createSuccess}} 
                     </div>
+                    -->
                 </div>
             </div>
 
@@ -153,7 +156,8 @@
                     dateOfBirth: '',
                     zipCode: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    description: ''
                 },
 
                 createSuccess: '',

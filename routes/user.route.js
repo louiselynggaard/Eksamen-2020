@@ -7,4 +7,6 @@ router.get('/login/:email', controller.user_login); //READ (get)
 
 router.post('/create', controller.user_create); //CREATE (post)
 
+router.put('/update/:email', controller.user_update); //UPDATE (put)
+
 module.exports = router;
