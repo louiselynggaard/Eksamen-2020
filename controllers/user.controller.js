@@ -63,12 +63,6 @@ exports.user_likes_list = function (req, res) {
     //Returner nyt array
     res.send(responseList);
 };
- /*
-exports.user_likes_list = function (req, res) {
-    console.log('user_list:', userData.userList);
-    res.send(userData.userList)
-};
-*/
 
 //CREATE
 exports.user_create = function (req, res) {

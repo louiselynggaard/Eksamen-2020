@@ -70,14 +70,17 @@
 
             <div v-if="showContainer=='MyProfile'">
                 <div class="label1">
+                    <template v-if="updateUser != null">
+                        <label class="label1"><span>Navn:</span><input type="text" v-model="updateUser.name" required></label><br>
+                        <label class="label1"><span>Fødselsdag:</span><input type="date" v-model="updateUser.dateOfBirth" required></label><br>
+                        <label class="label1"><span>Postnummer:</span><input type="text" v-model="updateUser.zipCode" required></label><br>
+                        <label class="label1"><span>Email:</span><input type="email" v-model="updateUser.email" required></label><br>
+                        <label class="label1"><span>Password:</span><input type="password" v-model="updateUser.password" required></label><br>
+                        <label class="label1"><span>Beskriv dig selv:</span><input type="text" v-model="updateUser.description" required></label><br>
+                    </template>
+
                     <div class="label1">
-                        <span>Opdatér personlige oplysninger her:</span><br>
-                        <label class="label1"><span>Navn:</span><input type="text" v-model="createUser.name" required></label><br>
-                        <label class="label1"><span>Fødselsdag:</span><input type="date" v-model="createUser.dateOfBirth" required></label><br>
-                        <label class="label1"><span>Postnummer:</span><input type="text" v-model="createUser.zipCode" required></label><br>
-                        <label class="label1"><span>Email:</span><input type="email" v-model="createUser.email" required></label><br>
-                        <label class="label1"><span>Password:</span><input type="password" v-model="createUser.password" required></label><br>
-                        <label class="label1"><span>Beskriv dig selv:</span><input type="text" v-model="createUser.description" required></label><br>
+                        <button @click="clickUpdate()">Opdatér min profil</button>
                     </div>
 
                     <div class="label1">
@@ -92,7 +95,6 @@
 
             <div v-if="showContainer=='MyMatches'">
                 <div class="label1">
-                    <p>Brugere jeg har liket</p>
                     <div class="label1">
                         <button @click="clickLikesList">Brugere jeg har liket</button><br>
                         <div v-for="elm in likesListResult">
@@ -187,6 +189,32 @@
                     });
                 },
 
+                clickUpdate: function () {
+                    var requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-type': 'application/json; charset=UTF-8' }, // Indicates the content 
+                    body: JSON.stringify(this.updateUser)
+                };
+
+                this.testError = null;
+                fetch('/api/user/update/', requestOptions)
+                .then(async response => {
+
+                    // check for error response
+                    if (!response.ok) {
+                        const data = await response.text();
+                        // get error message from body or default to response statusText
+                        const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                        return Promise.reject(error); // throw error to catch
+                    }
+
+                    this.updateUser = await response.json();
+                })
+                .catch(error => {
+                    alert(error);
+                });
+                },
+
                 clickDelete: function (){
                     var requestOptions = {
                     method: 'DELETE'
@@ -218,7 +246,7 @@
                     if (this.showContainer == 'Login') return '<span style="font-size:24px">Velkommen</span><br/>Udfyld følgende form for at logge ind';
                     if (this.showContainer == 'Create') return '<span style="font-size:24px">Opret Bruger</span><br/>Udfyld følgende form for at oprette en bruger';
                     if (this.showContainer == 'FrontPage') return '<span style="font-size:24px">Forside</span><br/>Like for match, dislike for at passere';
-                    if (this.showContainer == 'MyProfile') return '<span style="font-size:24px">Min profil</span>';
+                    if (this.showContainer == 'MyProfile') return '<span style="font-size:24px">Min profil</span><br/>Opdatér personlige oplysninger her:';
                     if (this.showContainer == 'MyMatches') return '<span style="font-size:24px">Mine matches</span><br/>Se dine matches her';
                     return this.showContainer; //hvis ikke der er kaldt en container, vises default som vist i data
                 }
@@ -244,6 +272,15 @@
                 },
 
                 //createSuccess: '',
+
+                updateUser: {
+                    name: '',
+                    dateOfBirth: '',
+                    zipCode: '',
+                    email: '',
+                    password: '',
+                    description: ''
+                },
 
                 user: {
                     name: 'Anders And',

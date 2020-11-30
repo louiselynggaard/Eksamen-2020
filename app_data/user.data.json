@@ -4,13 +4,15 @@
         {
             "id": "2",
             "name": "Anders And",
-            "dateOfBirth": "2020-05-07",
-            "zipCode": "2000",
+            "dateOfBirth": "2020-11-06",
+            "zipCode": "2345",
             "email": "andersand@gmail.com",
             "password": "Anders1234",
-            "description": "Jeg er altid pisse sur.",
+            "description": "Jeg er altid pisse sur",
             "likeIdList": [
-                "3", "5", "4"
+                "3",
+                "5",
+                "4"
             ]
         },
         {
@@ -22,7 +24,8 @@
             "password": "Minnie1234",
             "description": "Jeg har kæreste med Mickey Mouse",
             "likeIdList": [
-                "1", "2"
+                "1",
+                "2"
             ]
         },
         {
