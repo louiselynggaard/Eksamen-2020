@@ -22,16 +22,20 @@
 
         <div class="container">
             <div v-if="showContainer=='Login'">
-                    <label class="label1"><span>Email</span><input type="email" v-model="loginUser.email" required></label><br>
-                    <label class="label1"><span>Password</span><input type="password" v-model="loginUser.password" required></label><br>
+                <div>
+                    <form @submit.prevent="showContainer='Create'">
+                        <label class="label1"><span>Email</span><input type="email" v-model="loginUser.email" required></label><br>
+                        <label class="label1"><span>Password</span><input type="password" v-model="loginUser.password" required></label><br>
 
-                    <div style="text-align: left;">
-                        <button @click="showContainer='FrontPage'">Login</button>
-                    </div>
+                        <div style="text-align: left;">
+                            <button type="submit">Login</button>
+                        </div>
 
-                    <div style="text-align: left;">
-                        <p>Ikke bruger endnu?</p><div><button @click="showContainer='Create'">Opret dig her</button></div>
-                    </div>
+                        <div style="text-align: left;">
+                            <p>Ikke bruger endnu?</p><div><button @click="showContainer='Create'">Opret dig her</button></div>
+                        </div>
+                    </form>
+                </div>    
             </div>
 
             <div v-if="showContainer=='Create'">
