@@ -15,6 +15,6 @@ router.post('/create', controller.user_create);
 router.put('/update/:email', controller.user_update);
 
 //DELETE (delete)
-router.delete('/delete/:email', controller.user_delete);
+router.delete('/delete', controller.user_delete);
 
 module.exports = router;

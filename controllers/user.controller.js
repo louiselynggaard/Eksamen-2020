@@ -112,16 +112,11 @@ exports.user_update = function (req, res) {
 
 //DELETE
 exports.user_delete = function (req, res) {
-    let user = null;
-    let index = userData.userList.findIndex(x => x.email === req.params.email);
-    if (index == -1) {
-        console.log('user_delete, 404');
-        res.status(404).send('email '+req.params.email+' not found');
-        return;
-    }
-    user = userData.userList[index];
+    var myIndex = getMyIndex(req);
 
-    userData.userList.splice(index, 1); // remove from array
+    let user = userData.userList[myIndex];
+
+    userData.userList.splice(myIndex, 1); // remove from array https://www.w3schools.com/jsref/jsref_splice.asp
     console.log('user_delete, user:', user);
 
     writeUserData();

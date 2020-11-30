@@ -1,16 +1,6 @@
 {
-    "lastUserId": 8,
+    "lastUserId": 9,
     "userList": [
-        {
-            "id": "1",
-            "name": "Micky Mouse",
-            "dateOfBirth": "1935-09-10",
-            "zipCode": "2000",
-            "email": "mickymouse@gmail.com",
-            "password": "Micky1234",
-            "description": "Jeg er ældst",
-            "likeIdList": ["3"]
-        },
         {
             "id": "2",
             "name": "Anders And",
@@ -19,7 +9,9 @@
             "email": "andersand@gmail.com",
             "password": "Anders1234",
             "description": "Jeg er altid sur",
-            "likeIdList": ["2"]
+            "likeIdList": [
+                "2"
+            ]
         },
         {
             "id": "3",
@@ -28,8 +20,10 @@
             "zipCode": "2000",
             "email": "minniemouse@gmail.com",
             "password": "Minnie1234",
-            "description": "Jeg har kæreste med Micky Mouse",
-            "likeIdList": ["1"]
+            "description": "Jeg har kæreste med Mickey Mouse",
+            "likeIdList": [
+                "1"
+            ]
         },
         {
             "id": "4",
@@ -39,7 +33,9 @@
             "email": "rip@gmail.com",
             "password": "Rip1234",
             "description": "Jeg har to brødre",
-            "likeIdList": ["2"]
+            "likeIdList": [
+                "2"
+            ]
         },
         {
             "id": "5",
@@ -49,7 +45,9 @@
             "email": "rap@gmail.com",
             "password": "Rap1234",
             "description": "Jeg har to brødre",
-            "likeIdList": ["3"]
+            "likeIdList": [
+                "3"
+            ]
         },
         {
             "id": "6",
@@ -59,7 +57,9 @@
             "email": "rup@gmail.com",
             "password": "Rup1234",
             "description": "Jeg har to brødre",
-            "likeIdList": ["4"]
+            "likeIdList": [
+                "4"
+            ]
         },
         {
             "id": "7",
@@ -69,7 +69,9 @@
             "email": "fedtmule@gmail.com",
             "password": "Fedtmule1234",
             "description": "Jeg har en hund",
-            "likeIdList": ["5"]
+            "likeIdList": [
+                "5"
+            ]
         },
         {
             "id": "8",
@@ -79,7 +81,19 @@
             "email": "andersine@gmail.com",
             "password": "Andersine1234",
             "description": "Jeg er kæreste med Anders And",
-            "likeIdList": ["2"]
+            "likeIdList": [
+                "2"
+            ]
+        },
+        {
+            "id": "9",
+            "name": "Pluto",
+            "dateOfBirth": "4444-03-22",
+            "zipCode": "2000",
+            "email": "pluto@gmail.com",
+            "password": "Pluto1234",
+            "description": "Min ejer hedder Fedtmule",
+            "likeIdList": []
         }
     ]
 }
