@@ -9,4 +9,6 @@ router.post('/create', controller.user_create); //CREATE (post)
 
 router.put('/update/:email', controller.user_update); //UPDATE (put)
 
+router.delete('/delete/:email', controller.user_delete); //DELETE (delete)
+
 module.exports = router;

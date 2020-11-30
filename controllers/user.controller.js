@@ -73,3 +73,21 @@ exports.user_update = function (req, res) {
 
     res.send(user)
 };
+
+exports.user_delete = function (req, res) {
+    let user = null;
+    let index = userData.userList.findIndex(x => x.email === req.params.email);
+    if (index == -1) {
+        console.log('user_delete, 404');
+        res.status(404).send('email '+req.params.email+' not found');
+        return;
+    }
+    user = userData.userList[index];
+
+    userData.userList.splice(index, 1); // remove from array
+    console.log('user_delete, user:', user);
+
+    writeUserData();
+
+    res.send(user)
+};
