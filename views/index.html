@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="label1">
-                        <button @click="clickDelete">Slet bruger</button>
+                        <button @click="clickDelete()">Slet min bruger</button>
                     </div>
 
                     <div class="label1">
@@ -221,7 +221,7 @@
                 };
 
                 this.testError = null;
-                fetch('/api/user/delete/' + this.deleteId, requestOptions)
+                fetch('/api/user/delete', requestOptions)
                 .then(async response => {
 
                     // check for error response
@@ -233,7 +233,7 @@
                     }
 
                     const data = await response.json();
-                    this.deleteSuccess = data.name + " was deleted successfully";
+                    this.showContainer="Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
                 })
                 .catch(error => {
                     alert(error);
