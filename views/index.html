@@ -6,11 +6,16 @@
     <title>Dating App</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.js"></script> <!--Forudsætning for at bruge Vue-->
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
     <div id="app">
-        <div v-if="showContainer!='Login' && showContainer!='Create'">
+        <div class="loginHeader" v-if="showContainer!='Login' && showContainer!='Create'">
+            <h1>Dating app</h1>
+        </div>
+
+        <div class="navbar" v-if="showContainer!='Login' && showContainer!='Create'">
             <button @click="showContainer='FrontPage'">Forside</button>
             <button @click="showContainer='MyProfile'">Min profil</button>
             <button @click="showContainer='MyMatches'">Mine matches</button>
@@ -97,9 +102,9 @@
                 <div class="label1">
                     <div class="label1">
                         <button @click="clickLikesList">Brugere jeg har liket</button><br>
-                        <div v-for="elm in likesListResult">
+                        <div v-for="(elm, index) in likesListResult">
                             <span>name: {{elm.name}}, dateOfBirth: {{elm.dateOfBirth}}, zipCode: {{elm.zipCode}}, match: {{elm.match}}</span>
-                            <button>Slet</button>
+                            <button @click="clickDeleteLike(index)">Slet</button>
                         </div>                           
                     </div>
                 </div>
@@ -215,29 +220,36 @@
                 });
                 },
 
-                clickDelete: function (){
+                clickDeleteLike: function (index) {
+                    var requestOptions = {
+                        method: 'DELETE'
+                    };
+                    this.updateUser.likeIdList.splice(index, 1);
+                },
+
+                clickDelete: function () {
                     var requestOptions = {
                     method: 'DELETE'
-                };
+                    };
 
-                this.testError = null;
-                fetch('/api/user/delete', requestOptions)
-                .then(async response => {
+                    this.testError = null;
+                    fetch('/api/user/delete', requestOptions)
+                    .then(async response => {
 
-                    // check for error response
-                    if (!response.ok) {
-                        const data = await response.text();
-                        // get error message from body or default to response statusText
-                        const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                        return Promise.reject(error); // throw error to catch
-                    }
+                        // check for error response
+                        if (!response.ok) {
+                            const data = await response.text();
+                            // get error message from body or default to response statusText
+                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                            return Promise.reject(error); // throw error to catch
+                        }
 
                     const data = await response.json();
                     this.showContainer="Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
-                })
-                .catch(error => {
+                    })
+                    .catch(error => {
                     alert(error);
-                });
+                    });
                 }
             },
             
@@ -279,7 +291,8 @@
                     zipCode: '',
                     email: '',
                     password: '',
-                    description: ''
+                    description: '',
+                    likeIdList: ''
                 },
 
                 user: {

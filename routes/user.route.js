@@ -14,6 +14,7 @@ router.post('/create', controller.user_create);
 router.put('/update', controller.user_update);
 
 //DELETE (delete)
+router.delete('likes/delete', controller.user_likes_delete);
 router.delete('/delete', controller.user_delete);
 
 module.exports = router;

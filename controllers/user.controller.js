@@ -105,6 +105,19 @@ exports.user_update = function (req, res) {
 };
 
 //DELETE
+exports.user_likes_delete = function (req, res) {
+    let myIndex = getMyIndex(req);
+
+    let myLikeIdList = userData.userList[myIndex].likeIdList;
+
+    userLikes.splice(index,1);
+    console.log('user_likes_delete, user:', userLikes);
+
+    writeUserData();
+
+    res.send(myLikeIdList);
+};
+
 exports.user_delete = function (req, res) {
     let myIndex = getMyIndex(req);
 
