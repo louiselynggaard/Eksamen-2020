@@ -106,12 +106,17 @@ exports.user_update = function (req, res) {
 
 //DELETE
 exports.user_likes_delete = function (req, res) {
+    //Hvilket index/id har jeg selv?
     let myIndex = getMyIndex(req);
+    //let myId = userData.userList[myIndex].id;
+
+    //Hvem vil jeg slette?
+    let likeIndex = userData.userList[myIndex].likeIdList[0];
 
     let myLikeIdList = userData.userList[myIndex].likeIdList;
 
-    userLikes.splice(index,1);
-    console.log('user_likes_delete, user:', userLikes);
+    myLikeIdList.splice(0,1); //her burde man kunne skrive splice(likeIndex,1); men det virker ikke?
+    console.log('user_likes_delete, user-id:', likeIndex);
 
     writeUserData();
 
