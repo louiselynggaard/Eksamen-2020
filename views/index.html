@@ -147,7 +147,7 @@
                     method: 'GET'
                 };
 
-                this.testError = null;
+                this.error = null;
                 // GET request using fetch with error handling
                 fetch('/api/user/likes/list', requestOptions)
                 .then(async response => {
@@ -202,7 +202,7 @@
                     body: JSON.stringify(this.updateUser)
                 };
 
-                this.testError = null;
+                this.error = null;
                 fetch('/api/user/update/', requestOptions)
                 .then(async response => {
 
@@ -225,7 +225,22 @@
                     var requestOptions = {
                         method: 'DELETE'
                     };
-                    this.updateUser.likeIdList.splice(index, 1);
+
+                    this.error = null;
+                    fetch('api/user/likes/delete', requestOptions)
+                    .then(async response => {
+                        if (!response.ok) {
+                            const data = await response.text();
+                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                            return Promise.reject(error);
+                        }
+
+                        const data = await response.json();
+                    })
+                    .catch(error => {
+                        alert(error);
+                    });
+                    //this.updateUser.likeIdList.splice(index, 1);
                 },
 
                 clickDelete: function () {
@@ -233,7 +248,7 @@
                     method: 'DELETE'
                     };
 
-                    this.testError = null;
+                    this.error = null;
                     fetch('/api/user/delete', requestOptions)
                     .then(async response => {
 
@@ -245,11 +260,11 @@
                             return Promise.reject(error); // throw error to catch
                         }
 
-                    const data = await response.json();
-                    this.showContainer="Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
+                        const data = await response.json();
+                        this.showContainer="Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
                     })
                     .catch(error => {
-                    alert(error);
+                        alert(error);
                     });
                 }
             },

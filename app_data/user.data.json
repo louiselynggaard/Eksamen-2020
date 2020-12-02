@@ -2,28 +2,14 @@
     "lastUserId": 9,
     "userList": [
         {
-            "id": "1",
-            "name": "TEST And",
-            "dateOfBirth": "2020-11-06",
-            "zipCode": "2345",
-            "email": "andersand@gmail.com",
-            "password": "Anders1234",
-            "description": "Jeg er altid pisse sur",
-            "likeIdList": [
-                "5",
-                "4"
-            ]
-        },
-        {
             "id": "2",
-            "name": "Anders And",
-            "dateOfBirth": "2020-11-06",
-            "zipCode": "2345",
+            "name": "Anders And 2",
+            "dateOfBirth": "2020-12-10",
+            "zipCode": "2000",
             "email": "andersand@gmail.com",
             "password": "Anders1234",
-            "description": "Jeg er altid pisse sur",
+            "description": "",
             "likeIdList": [
-                "3",
                 "5",
                 "4"
             ]
