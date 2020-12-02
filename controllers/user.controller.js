@@ -64,6 +64,32 @@ exports.user_likes_list = function (req, res) {
     res.send(responseList);
 };
 
+exports.suggested_match = function (req, res) {
+    let myIndex = getMyIndex(req);
+    let myUser = userData.userList[myIndex];
+
+    //For loop, der gennemgår alle i databasen
+    let suggestedMatchList = [];
+    for (i=0; i<userData.userList.length; i++) {
+        let suggestedMatch = userData.userList[i];
+        //Er det mit eget id, så spring over
+        if (suggestedMatch.id == myUser.id)
+            continue;
+        
+        //Har jeg allerede liket, så spring over
+        if (myUser.likeIdList.includes(suggestedMatch.id))
+            continue;
+
+        suggestedMatchList.push({name: suggestedMatch.name, dateOfBirth: suggestedMatch.dateOfBirth, zipCode: suggestedMatch.zipCode});
+
+    };
+
+    let index = parseInt(Math.random()*suggestedMatchList.length); //Math.random() ganget med antallet af index i bruger-array. parseInt() gør decimal-tallet til et helt tal.
+    //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    
+    res.send(suggestedMatchList[index]);
+};
+
 //CREATE
 exports.user_create = function (req, res) {
     let user = new User( //der oprettes en ny bruger på baggrund af klassen "User" i user.model.js
@@ -83,6 +109,20 @@ exports.user_create = function (req, res) {
 
     res.send(user)
 };
+
+/*
+exports.user_like = function (req, res) {
+    let like = userData.userList.likeIdList;
+
+    if (!this.likeIdList.includes(like))
+            this.likeIdList.push(like);
+
+    addLike(id) {
+        if (!this.likeIdList.includes(id)) //hvis ikke id'et findes i brugerens like-array i forvejen, tilføjes det
+           this.likeIdList.push(id);
+    };
+};
+*/
 
 //UPDATE
 exports.user_update = function (req, res) {
