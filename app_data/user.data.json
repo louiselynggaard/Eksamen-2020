@@ -3,15 +3,16 @@
     "userList": [
         {
             "id": "2",
-            "name": "Anders And 2",
-            "dateOfBirth": "2020-12-10",
+            "name": "Anders And",
+            "dateOfBirth": "5334-04-23",
             "zipCode": "2000",
             "email": "andersand@gmail.com",
             "password": "Anders1234",
-            "description": "",
+            "description": "Jeg er pisse sur",
             "likeIdList": [
-                "5",
-                "4"
+                "4",
+                "8",
+                "9"
             ]
         },
         {
@@ -24,7 +25,8 @@
             "description": "Jeg har kæreste med Mickey Mouse",
             "likeIdList": [
                 "1",
-                "2"
+                "2",
+                "8"
             ]
         },
         {
@@ -95,7 +97,9 @@
             "email": "pluto@gmail.com",
             "password": "Pluto1234",
             "description": "Min ejer hedder Fedtmule",
-            "likeIdList": []
+            "likeIdList": [
+                "2"
+            ]
         }
     ]
 }

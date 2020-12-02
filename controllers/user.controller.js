@@ -81,7 +81,6 @@ exports.suggested_match = function (req, res) {
             continue;
 
         suggestedMatchList.push({name: suggestedMatch.name, dateOfBirth: suggestedMatch.dateOfBirth, zipCode: suggestedMatch.zipCode});
-
     };
 
     let index = parseInt(Math.random()*suggestedMatchList.length); //Math.random() ganget med antallet af index i bruger-array. parseInt() gør decimal-tallet til et helt tal.
@@ -105,24 +104,10 @@ exports.user_create = function (req, res) {
     userData.userList.push(user); //indsæt som statisk data i JSON-fil
     console.log('user_create, user:', user); //det logges i consolen, at der er oprettet en ny bruger
 
-    writeUserData(); //når der er oprettet en ny bruges skrives denne ind i "databasen" user.data.json
+    writeUserData(); //når der er oprettet en ny bruger skrives denne ind i "databasen" user.data.json
 
     res.send(user)
 };
-
-/*
-exports.user_like = function (req, res) {
-    let like = userData.userList.likeIdList;
-
-    if (!this.likeIdList.includes(like))
-            this.likeIdList.push(like);
-
-    addLike(id) {
-        if (!this.likeIdList.includes(id)) //hvis ikke id'et findes i brugerens like-array i forvejen, tilføjes det
-           this.likeIdList.push(id);
-    };
-};
-*/
 
 //UPDATE
 exports.user_update = function (req, res) {
@@ -144,23 +129,45 @@ exports.user_update = function (req, res) {
     res.send(user);
 };
 
+exports.user_like = function (req, res) {
+    //Hvem er jeg?
+    let myIndex = getMyIndex();
+    let myUser = userData.userList[myIndex];
+
+    //Hvem vil jeg like?
+    let suggestedUserId = req.body.id; //variablen id hentes fra request-body
+
+    if (!myUser.likeIdList.includes(suggestedUserId)) //hvis ikke brugeren er liket i forvejen, likes den nu
+        myUser.likeIdList.push(suggestedUserId); //man kan ikke like en person flere gange
+
+    let suggestedUser = userData.userList.find(x => x.id === suggestedUserId); //den forslåedes brugers id findes 
+
+    let mutualLike = (myUser.likeIdList.includes(suggestedUserId) && suggestedUser.likeIdList.includes(myUser.id)); //hvis der er like fra begge parter er denne variable true
+
+    writeUserData(); //skriver opdatering i basen
+
+    res.send({mutualLike: mutualLike, likeIdList: myUser.likeIdList}); //returnerer JSON-objekt 
+};
+
+
 //DELETE
 exports.user_likes_delete = function (req, res) {
     //Hvilket index/id har jeg selv?
-    let myIndex = getMyIndex(req);
-    //let myId = userData.userList[myIndex].id;
+    let myIndex = getMyIndex();
+    let myUser = userData.userList[myIndex];
 
     //Hvem vil jeg slette?
-    let likeIndex = userData.userList[myIndex].likeIdList[0];
+    let suggestedUser = req.body.id;
 
-    let myLikeIdList = userData.userList[myIndex].likeIdList;
+    let index = myUser.likeIdList.findIndex(x => x === suggestedUser);
 
-    myLikeIdList.splice(0,1); //her burde man kunne skrive splice(likeIndex,1); men det virker ikke?
-    console.log('user_likes_delete, user-id:', likeIndex);
+    if(index != -1) {
+        myUser.likeIdList.splice(index,1);
+    }
 
     writeUserData();
 
-    res.send(myLikeIdList);
+    res.send(myUser.likeIdList);
 };
 
 exports.user_delete = function (req, res) {
