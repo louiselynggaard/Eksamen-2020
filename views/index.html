@@ -270,8 +270,9 @@
 
                         this.likeSuggestedUser = await response.json();
 
-                        if (!this.likeIdList.includes(id)) //hvis ikke id'et findes i brugerens like-array i forvejen, tilføjes det
-                            this.likeIdList.push(id);
+                        if (mutualLike = true) {
+                            return alert('I har matchet med hinanden!');
+                        }
                     })
                     .catch(error => {
                         alert(error);
