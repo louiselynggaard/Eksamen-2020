@@ -57,7 +57,7 @@ exports.user_likes_list = function (req, res) {
         if (myLikeIdList.includes(otherUser.id)) {
             let mutualMatch = otherUser.likeIdList.includes(myId);
             
-            responseList.push({name: otherUser.name, dateOfBirth: otherUser.dateOfBirth, zipCode: otherUser.zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
+            responseList.push({id: otherUser.id, name: otherUser.name, dateOfBirth: otherUser.dateOfBirth, zipCode: otherUser.zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
         }
     }
     //Returner nyt array
@@ -80,12 +80,13 @@ exports.suggested_match = function (req, res) {
         if (myUser.likeIdList.includes(suggestedMatch.id))
             continue;
 
-        suggestedMatchList.push({name: suggestedMatch.name, dateOfBirth: suggestedMatch.dateOfBirth, zipCode: suggestedMatch.zipCode});
+        suggestedMatchList.push({id: suggestedMatch.id, name: suggestedMatch.name, dateOfBirth: suggestedMatch.dateOfBirth, zipCode: suggestedMatch.zipCode, description: suggestedMatch.description});
     };
 
     let index = parseInt(Math.random()*suggestedMatchList.length); //Math.random() ganget med antallet af index i bruger-array. parseInt() gør decimal-tallet til et helt tal.
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     
+    console.log(suggestedMatchList[index], index);
     res.send(suggestedMatchList[index]);
 };
 
@@ -148,7 +149,6 @@ exports.user_like = function (req, res) {
 
     res.send({mutualLike: mutualLike, likeIdList: myUser.likeIdList}); //returnerer JSON-objekt 
 };
-
 
 //DELETE
 exports.user_likes_delete = function (req, res) {

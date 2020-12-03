@@ -29,7 +29,7 @@
         <div class="container">
             <div v-if="showContainer=='Login'">
                 <div>
-                    <form @submit.prevent="showContainer='FrontPage'">
+                    <form @submit.prevent="setFrontPage()">
                         <label class="label1"><span>Email</span><input type="email" v-model="loginUser.email" required></label><br>
                         <label class="label1"><span>Password</span><input type="password" v-model="loginUser.password" required></label><br>
 
@@ -66,11 +66,10 @@
             </div>
 
             <div v-if="showContainer=='FrontPage'">
-                <img src="./img/unknown.jpg"><br>
-                <label class="label1"><span>{{user.name}}, {{user.dateOfBirth}}, {{user.zipCode}}, {{user.description}}</span></label>
+                <label class="label1"><span>{{suggestedUser.name}}, {{suggestedUser.dateOfBirth}}, {{suggestedUser.zipCode}}, {{suggestedUser.description}}</span></label>
                 <div style="text-align: left;">
-                    <button @click="">Like</button>
-                    <button @click="">Dislike</button> 
+                    <button @click="clickLike(suggestedUser.id)">Like</button>
+                    <button @click="clickDislike()">Dislike</button> 
                 </div>
             </div>
 
@@ -103,9 +102,9 @@
                 <div class="label1">
                     <div class="label1">
                         <button @click="clickLikesList">Brugere jeg har liket</button><br>
-                        <div v-for="(elm, index) in likesListResult">
+                        <div v-for="elm in likesListResult">
                             <span>name: {{elm.name}}, dateOfBirth: {{elm.dateOfBirth}}, zipCode: {{elm.zipCode}}, match: {{elm.match}}</span>
-                            <button @click="clickDeleteLike(index)">Slet</button>
+                            <button @click="clickDeleteLike(elm.id)">Slet</button>
                         </div>                           
                     </div>
                 </div>
@@ -167,6 +166,37 @@
                 });
                 },
 
+                clickLike: function (id) {
+                    this.likeUser(id);
+                    this.showSuggestedUser();
+                },
+                
+                clickDislike: function () {
+                    this.showSuggestedUser();
+                },
+
+                showSuggestedUser: function () {
+                    var requestOptions = {
+                        method: 'GET'
+                    };
+
+                    this.error = null;
+                    fetch('/api/user/suggested/match', requestOptions)
+                    .then(async response => {
+
+                        if(!response.ok) {
+                            const data = await response.text();
+                            const error = response.status + ': ' + ((daya && data.message) || response.statusText);
+                            return Promise.reject(error);
+                        }
+
+                        this.suggestedUser = await response.json();
+                    })
+                    .catch(error => {
+                        alert(error);
+                    });
+                },
+
                 clickCreate: function () {
                     var requestOptions = {
                         method: "POST", //CREATE
@@ -221,9 +251,38 @@
                 });
                 },
 
-                clickDeleteLike: function (index) {
+                likeUser: function (id) {
                     var requestOptions = {
-                        method: 'DELETE'
+                        method: 'PUT',
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                        body: JSON.stringify({id: id})
+                    };
+
+                    this.error = null;
+                    fetch('/api/user/like/suggested/user', requestOptions)
+                    .then(async response => {
+
+                        if(!response.ok) {
+                            const data = await response.text();
+                            const error = response.stat + ': ' + ((data && data.message) || response.statusText);
+                            return Promise.reject(error);
+                        }
+
+                        this.likeSuggestedUser = await response.json();
+
+                        if (!this.likeIdList.includes(id)) //hvis ikke id'et findes i brugerens like-array i forvejen, tilføjes det
+                            this.likeIdList.push(id);
+                    })
+                    .catch(error => {
+                        alert(error);
+                    });
+                },
+
+                clickDeleteLike: function (id) {
+                    var requestOptions = {
+                        method: 'DELETE',
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                        body: JSON.stringify({id: id})
                     };
 
                     this.error = null;
@@ -235,7 +294,8 @@
                             return Promise.reject(error);
                         }
 
-                        const data = await response.json();
+                        //this.likesListResult = await response.json();
+                        this.clickLikesList();
                     })
                     .catch(error => {
                         alert(error);
@@ -265,6 +325,11 @@
                     .catch(error => {
                         alert(error);
                     });
+                },
+
+                setFrontPage: function () {
+                    this.showContainer='FrontPage';
+                    this.showSuggestedUser();
                 }
             },
             
@@ -298,7 +363,13 @@
                     description: ''
                 },
 
-                //createSuccess: '',
+                suggestedUser: {
+                    id: '',
+                    name: '',
+                    dateOfBirth: '',
+                    zipCode: '',
+                    description: ''
+                },
 
                 updateUser: {
                     name: '',
@@ -310,14 +381,7 @@
                     likeIdList: ''
                 },
 
-                user: {
-                    name: 'Anders And',
-                    dateOfBirth: '2020-05-07',
-                    zipCode: '2000',
-                    description: 'Jeg er altid sur'
-                },
-
-                likesListResult: ''
+                likesListResult: null
             }
         });
     </script>

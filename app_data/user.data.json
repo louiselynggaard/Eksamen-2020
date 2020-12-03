@@ -10,9 +10,8 @@
             "password": "Anders1234",
             "description": "Jeg er pisse sur",
             "likeIdList": [
-                "4",
-                "8",
-                "9"
+                "3",
+                "8"
             ]
         },
         {
@@ -22,7 +21,7 @@
             "zipCode": "2000",
             "email": "minniemouse@gmail.com",
             "password": "Minnie1234",
-            "description": "Jeg har kæreste med Mickey Mouse",
+            "description": "Jeg kan lide at danse",
             "likeIdList": [
                 "1",
                 "2",
