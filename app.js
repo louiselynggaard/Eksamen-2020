@@ -10,7 +10,7 @@ const app = express();
 //Middleware
 app.use(bodyParser.json()); //gør det muligt at læse 'body' via Express
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static(__dirname + '/views'));
+app.use(express.static(__dirname + '/views')); //kun filer i denne folder er tilgængelig på klienten
 
 const userRoute = require('./routes/user.route');
 app.use('/api/user', userRoute);

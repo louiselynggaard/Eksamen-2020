@@ -66,6 +66,7 @@
             </div>
 
             <div v-if="showContainer=='FrontPage'">
+                <img src="../img/unknown.jpg" style="width: 200px;"><br>
                 <label class="label1"><span>{{suggestedUser.name}}, {{suggestedUser.dateOfBirth}}, {{suggestedUser.zipCode}}, {{suggestedUser.description}}</span></label>
                 <div style="text-align: left;">
                     <button @click="clickLike(suggestedUser.id)">Like</button>
