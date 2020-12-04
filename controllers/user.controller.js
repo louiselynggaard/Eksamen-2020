@@ -1,6 +1,7 @@
 const fs = require('fs'); //node.js filesystem gør det muligt at læse, oprette, opdatere, slette filer
 
 const User = require('../models/user.model'); //klasse hentes fra denne mappe.
+const auth = require('../auth.js'); // middleware auth
 
 function readUserData() { //sørger for at hver gang serveren startes, så loades alt hvad der er tilgængeligt i "databasen" user.data.json
     let fileData = fs.readFileSync('./app_data/user.data.json', 'utf8', function (err) { //fs.readFileSync er en del af node.js-bibliotek. SYNC gør at serveren "blokeres" indtil ordren er udført. Serveren lytter ikke på andet imens. Det kan den ved redFile()
@@ -25,28 +26,25 @@ function getMyIndex(req) { //index på aktiv login-bruger er hårdkodet for at o
 var userData = readUserData(); //variablen userData oprettes ud fra det funktionen finder i json-filen/"databasen" user.data.json
 
 //READ
-exports.user_login = function (req, res) {
-    let user = userData.userList.find(x => x.email === req.params.email);
-    console.log('user_login, user:', user);
+exports.user_test = function (req, res) { // Testfunktion der viser indhold af token
 
-    if (user == undefined)
-        res.status(204).send();
-    else 
-        res.send(user)
+    if (req._customTokenData == undefined) {
+        res.send("token data: NO TOKEN");
+        return;
+    }
+
+    var tokenDate = new Date(req._customTokenData.iat * 1000);
+    var expireDate = new Date(req._customTokenData.exp * 1000);
+    res.send("token data:" + JSON.stringify(req._customTokenData) + ", tokenDate:" + tokenDate + ", expireDate:" + expireDate);
 };
 
 exports.user_likes_list = function (req, res) {
-    //console.log('user_likes:', userData.userList);
-
     //Hvilket id/index har jeg?
-    var myIndex = getMyIndex(req); //tester på den første i array
-    var myId = userData.userList[myIndex].id;
-
-    //Hvem har jeg liket?
-    var myLikeIdList = userData.userList[myIndex].likeIdList;
+    let myId = req._customTokenData.id; //eget id hentes fra token
+    let myUser = userData.userList.find(x => x.id === myId); //finder user i userData database
     
     //For loop, der gennemgår alle i databasen
-    var responseList = [];
+    let responseList = [];
     for (i=0; i<userData.userList.length; i++) { 
         let otherUser = userData.userList[i];
         //Er det mit eget id, så spring over
@@ -54,8 +52,8 @@ exports.user_likes_list = function (req, res) {
             continue;
         
         //Har jeg liket id'et, adderes dette til nyt array
-        if (myLikeIdList.includes(otherUser.id)) {
-            let mutualMatch = otherUser.likeIdList.includes(myId);
+        if (myUser.likeIdList.includes(otherUser.id)) {
+            let mutualMatch = otherUser.likeIdList.includes(myId); //true hvis otherUser har liket mig
             
             responseList.push({id: otherUser.id, name: otherUser.name, dateOfBirth: otherUser.dateOfBirth, zipCode: otherUser.zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
         }
@@ -65,8 +63,8 @@ exports.user_likes_list = function (req, res) {
 };
 
 exports.suggested_match = function (req, res) {
-    let myIndex = getMyIndex(req);
-    let myUser = userData.userList[myIndex];
+    let myId = req._customTokenData.id; //eget id hentes fra token
+    let myUser = userData.userList.find(x => x.id === myId); //finder user i userData database
 
     //For loop, der gennemgår alle i databasen
     let suggestedMatchList = [];
@@ -86,12 +84,40 @@ exports.suggested_match = function (req, res) {
     let index = parseInt(Math.random()*suggestedMatchList.length); //Math.random() ganget med antallet af index i bruger-array. parseInt() gør decimal-tallet til et helt tal.
     //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     
-    console.log(suggestedMatchList[index], index);
+    //console.log(suggestedMatchList[index], index);
     res.send(suggestedMatchList[index]);
 };
 
 //CREATE
+exports.user_login = function (req, res) {
+    let user = userData.userList.find(x => x.email === req.body.email); // find user in userData database
+
+    if (user == undefined) { // user with email not found
+        res.status(404).send(); // 404 Not Found
+        return;
+    }
+
+    if (req.body.token != null && req.body.token != '') { // Login by
+        if ( auth.isTokenValid(req.body.email, req.body.token) == false ) { // Token is not valid or email mismatch
+            res.status(401).send(); // 401 Unauthorized
+            return;
+        }
+       
+        res.send({name: user.name, dateOfBirth: user.dateOfBirth, zipCode: user.zipCode, email: user.email, description: user.description, token: req.body.token});
+        return;
+    }
+
+    if (user.password != req.body.password) { // not password match
+        res.status(401).send(); // 401 Unauthorized
+        return;
+    }
+
+    let jwtToken = auth.giveToken(user.id, user.email, user.name);
+    res.send({name: user.name, dateOfBirth: user.dateOfBirth, zipCode: user.zipCode, email: user.email, description: user.description, token: jwtToken});
+};
+
 exports.user_create = function (req, res) {
+
     let user = new User( //der oprettes en ny bruger på baggrund af klassen "User" i user.model.js
         (++userData.lastUserId).toString(), //når der oprettes en ny bruger, tildeles den et id, som tæller fra de i forvejen oprettede brugeres id'er. 
         req.body.name, //her bruges body-parser, som er en udvidelse af Express
@@ -112,28 +138,29 @@ exports.user_create = function (req, res) {
 
 //UPDATE
 exports.user_update = function (req, res) {
-    let myIndex = getMyIndex();
+    //Hvilket id/index har jeg?
+    let myId = req._customTokenData.id; //eget id hentes fra token
+    let myUser = userData.userList.find(x => x.id === myId); //finder user i userData database
 
-    let user = userData.userList[myIndex];
+    //Hvad vil jeg opdatere?
+    myUser.name = req.body.name;
+    myUser.dateOfBirth = req.body.dateOfBirth;
+    myUser.zipCode = req.body.zipCode;
+    myUser.email = req.body.email;
+    myUser.password = req.body.password;
+    myUser.description = req.body.description;
 
-    user.name = req.body.name;
-    user.dateOfBirth = req.body.dateOfBirth;
-    user.zipCode = req.body.zipCode;
-    user.email = req.body.email;
-    user.password = req.body.password;
-    user.description = req.body.description;
-
-    console.log('user_update, user:', user);
+    console.log('user_update, user:', myUser);
 
     writeUserData();
 
-    res.send(user);
+    res.send(myUser);
 };
 
 exports.user_like = function (req, res) {
-    //Hvem er jeg?
-    let myIndex = getMyIndex();
-    let myUser = userData.userList[myIndex];
+    //Hvilket id/index har jeg?
+    let myId = req._customTokenData.id; //eget id hentes fra token
+    let myUser = userData.userList.find(x => x.id === myId); //finder user i userData database
 
     //Hvem vil jeg like?
     let suggestedUserId = req.body.id; //variablen id hentes fra request-body
@@ -152,9 +179,9 @@ exports.user_like = function (req, res) {
 
 //DELETE
 exports.user_likes_delete = function (req, res) {
-    //Hvilket index/id har jeg selv?
-    let myIndex = getMyIndex();
-    let myUser = userData.userList[myIndex];
+    //Hvilket id/index har jeg?
+    let myId = req._customTokenData.id; //eget id hentes fra token
+    let myUser = userData.userList.find(x => x.id === myId); //finder user i userData database
 
     //Hvem vil jeg slette?
     let suggestedUser = req.body.id;
@@ -171,14 +198,18 @@ exports.user_likes_delete = function (req, res) {
 };
 
 exports.user_delete = function (req, res) {
-    let myIndex = getMyIndex(req);
+    //Hvilket id/index har jeg?
+    let myId = req._customTokenData.id; //eget id hentes fra token
+    let myUser = userData.userList.find(x => x.id === myId); //finder user i userData database
+    let myIndex = myUser.likeIdList.findIndex(x => x === myUser);
 
-    let user = userData.userList[myIndex];
+    //let myIndex = getMyIndex(req);
+    //let user = userData.userList[myIndex];
 
     userData.userList.splice(myIndex, 1); // remove from array https://www.w3schools.com/jsref/jsref_splice.asp
-    console.log('user_delete, user:', user);
+    console.log('user_delete, user:', myUser);
 
     writeUserData();
 
-    res.send(user);
+    res.send(myUser);
 };

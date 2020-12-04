@@ -13,13 +13,14 @@
     <div id="app">
         <div class="loginHeader" v-if="showContainer!='Login' && showContainer!='Create'">
             <h1>Dating app</h1>
+            <span style="position: absolute; top: 4px; right: 4px;">{{this.loginUser.name}}</span> <!--Viser hvilken bruger, der er logget ind-->
         </div>
 
         <div class="navbar" v-if="showContainer!='Login' && showContainer!='Create'">
             <button @click="showContainer='FrontPage'">Forside</button>
-            <button @click="showContainer='MyProfile'">Min profil</button>
+            <button @click="clickMyProfile()">Min profil</button>
             <button @click="showContainer='MyMatches'">Mine matches</button>
-            <button @click="showContainer='Login'">Log ud</button>
+            <button @click="clickLogout()">Log ud</button>
         </div>
 
         <div class="header">
@@ -29,7 +30,7 @@
         <div class="container">
             <div v-if="showContainer=='Login'">
                 <div>
-                    <form @submit.prevent="setFrontPage()">
+                    <form @submit.prevent="clickLogin()">
                         <label class="label1"><span>Email</span><input type="email" v-model="loginUser.email" required></label><br>
                         <label class="label1"><span>Password</span><input type="password" v-model="loginUser.password" required></label><br>
 
@@ -81,7 +82,6 @@
                         <label class="label1"><span>Fødselsdag:</span><input type="date" v-model="updateUser.dateOfBirth" required></label><br>
                         <label class="label1"><span>Postnummer:</span><input type="text" v-model="updateUser.zipCode" required></label><br>
                         <label class="label1"><span>Email:</span><input type="email" v-model="updateUser.email" required></label><br>
-                        <label class="label1"><span>Password:</span><input type="password" v-model="updateUser.password" required></label><br>
                         <label class="label1"><span>Beskriv dig selv:</span><input type="text" v-model="updateUser.description" required></label><br>
                     </template>
 
@@ -91,10 +91,6 @@
 
                     <div class="label1">
                         <button @click="clickDelete()">Slet min bruger</button>
-                    </div>
-
-                    <div class="label1">
-                        <button @click="showContainer='Login'">Log ud</button>
                     </div>
                 </div>
             </div>
@@ -116,11 +112,43 @@
     <script>
         var vm = new Vue({
             el: '#app',
+            mounted() { //første kald, når klassen og siden "monteres/starter"
+                this.loginUser.email = this.getCookie('email'); //cookies hentes, hvis de findes
+                this.loginUser.token = this.getCookie('token');
+                if (this.loginUser.email !== '' && this.loginUser.token !== '') { //hvis begge dele findes, kaldes clickLogin-funktion
+                    this.clickLogin();
+                }
+            },
             methods: {
-                clickLogin: function () {
+                getCookie: function (cname) { //henter cookie via navn https://www.w3schools.com/js/js_cookies.asp
+                    var name = cname + "=";
+                    var decodedCookie = decodeURIComponent(document.cookie);
+                    var ca = decodedCookie.split(';');
+                    for (var i = 0; i < ca.length; i++) {
+                        var c = ca[i];
+                        while (c.charAt(0) === ' ') {
+                            c = c.substring(1);
+                        }
+                        if (c.indexOf(name) === 0) {
+                            return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                },
 
+                updateLoginCookie: function (saveCookie) { //gemmer el. sletter email og token
+                    const expires = (saveCookie)
+                        ? "; expires=Fri, 01 Jan 2038 00:00:00 UTC; path=/;" //gemmer
+                        : "; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; //sletter
+                    document.cookie = `email=${this.loginUser.email}${expires}`;
+                    document.cookie = `token=${this.loginUser.token}${expires}`;
+                },
+
+                clickLogin: function () {
                     var requestOptions = {
-                        method: "GET",
+                        method: "POST",
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indicates the content. UTF-8 = der kan skrive æøå
+                        body: JSON.stringify(this.loginUser)
                     };
 
                     this.error = null;
@@ -133,8 +161,22 @@
                             return Promise.reject(error);
                         }
 
-                        const data = await response.json();
-                        this.loginUser = data;
+                        this.loginUser.password = ''; //ingen grund til det er synligt i browseren
+
+                        let loginData = await response.json();
+                        this.loginUser.name = loginData.name;
+                        this.loginUser.token = loginData.token; //gemmer token til senere API-kald
+                        
+                        //gemmer værdier i objektet til 'MyProfil'
+                        this.updateUser.name = loginData.name;
+                        this.updateUser.dateOfBirth = loginData.dateOfBirth;
+                        this.updateUser.zipCode = loginData.zipCode;
+                        this.updateUser.email = loginData.email;
+                        this.updateUser.description = loginData.description;
+
+                        this.updateLoginCookie(true); //gemmer logindata i cookie
+
+                        this.showSuggestedUser();
                         this.showContainer = 'FrontPage';
                     })
                     .catch(error => {
@@ -142,9 +184,16 @@
                     });
                 },
 
+                clickLogout: function () {
+                    this.loginUser.token = '';
+                    this.updateLoginCookie(false); // Delete login data in cookie
+                    this.showContainer = 'Login';
+                },
+
                 clickLikesList: function () {
                     var requestOptions = {
-                    method: 'GET'
+                    method: 'GET',
+                    headers: { 'Authorization': 'Bearer ' + this.loginUser.token }
                 };
 
                 this.error = null;
@@ -178,7 +227,8 @@
 
                 showSuggestedUser: function () {
                     var requestOptions = {
-                        method: 'GET'
+                        method: 'GET',
+                        headers: { 'Authorization': 'Bearer ' + this.loginUser.token }
                     };
 
                     this.error = null;
@@ -187,7 +237,7 @@
 
                         if(!response.ok) {
                             const data = await response.text();
-                            const error = response.status + ': ' + ((daya && data.message) || response.statusText);
+                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
                             return Promise.reject(error);
                         }
 
@@ -218,8 +268,7 @@
 
                         const data = await response.json();
                         this.createUser = data;
-                        this.showContainer='FrontPage';
-                        //this.createSuccess = this.createUser.name + ' was created successfully';
+                        this.showContainer='Login';
                     })
                     .catch(error => {
                         alert(error);
@@ -229,7 +278,7 @@
                 clickUpdate: function () {
                     var requestOptions = {
                     method: 'PUT',
-                    headers: { 'Content-type': 'application/json; charset=UTF-8' }, // Indicates the content 
+                    headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token }, // Indicates the content 
                     body: JSON.stringify(this.updateUser)
                 };
 
@@ -255,7 +304,7 @@
                 likeUser: function (id) {
                     var requestOptions = {
                         method: 'PUT',
-                        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                        headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token },
                         body: JSON.stringify({id: id})
                     };
 
@@ -270,10 +319,11 @@
                         }
 
                         this.likeSuggestedUser = await response.json();
-
-                        if (mutualLike = true) {
+                        /*
+                        if (mutualLike == true) {
                             return alert('I har matchet med hinanden!');
                         }
+                        */
                     })
                     .catch(error => {
                         alert(error);
@@ -283,7 +333,7 @@
                 clickDeleteLike: function (id) {
                     var requestOptions = {
                         method: 'DELETE',
-                        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+                        headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token },
                         body: JSON.stringify({id: id})
                     };
 
@@ -306,7 +356,8 @@
 
                 clickDelete: function () {
                     var requestOptions = {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                    headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token }
                     };
 
                     this.error = null;
@@ -320,8 +371,10 @@
                             const error = response.status + ': ' + ((data && data.message) || response.statusText);
                             return Promise.reject(error); // throw error to catch
                         }
+                        this.loginUser.token = '';
+                        this.updateLoginCookie(false); // Delete login data in cookie
 
-                        const data = await response.json();
+                        //const data = await response.json();
                         this.showContainer="Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
                     })
                     .catch(error => {
@@ -332,7 +385,40 @@
                 setFrontPage: function () {
                     this.showContainer='FrontPage';
                     this.showSuggestedUser();
+                },
+                
+                clickMyProfile: function () {
+                    
+                    this.showContainer='MyProfile';
+                },
+/*
+                createNewUser: function () {
+                    var requestOptions = {
+                        method: "POST", //CREATE
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indicates the content. UTF-8 = der kan skrive æøå
+                        body: JSON.stringify(this.createUser)
+                    };
+                    
+                    this.error = null;
+                    fetch('/api/user/create', requestOptions)
+                    .then(async response => {
+
+                        //tjekker om der er fejl i svaret
+                        if (!response.ok) { //hvis der fås et svar med statuskode >299 = fejl
+                            const data = await response.text(); //svaret kommer retur som tekst og ikke en JSON-fil = fejl
+                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                            return Promise.reject(error); //throw error to catch
+                        }
+
+                        const data = await response.json();
+                        this.createUser = data;
+                        this.showContainer='Login';
+                    })
+                    .catch(error => {
+                        alert(error);
+                    });
                 }
+                */
             },
             
             computed: {
@@ -353,7 +439,9 @@
 
                 loginUser: {
                     email: '',
-                    password: ''
+                    password: '',
+                    name: '',
+                    token: ''
                 },
 
                 createUser: {
@@ -378,7 +466,6 @@
                     dateOfBirth: '',
                     zipCode: '',
                     email: '',
-                    password: '',
                     description: '',
                     likeIdList: ''
                 },

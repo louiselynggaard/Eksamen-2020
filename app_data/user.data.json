@@ -1,16 +1,15 @@
 {
-    "lastUserId": 9,
+    "lastUserId": 10,
     "userList": [
         {
             "id": "2",
             "name": "Anders And",
-            "dateOfBirth": "5334-04-23",
+            "dateOfBirth": "2020-01-07",
             "zipCode": "2000",
             "email": "andersand@gmail.com",
             "password": "Anders1234",
-            "description": "Jeg er pisse sur",
+            "description": "Jeg er altid sur",
             "likeIdList": [
-                "5",
                 "3"
             ]
         },
@@ -23,7 +22,6 @@
             "password": "Minnie1234",
             "description": "Jeg kan lide at danse",
             "likeIdList": [
-                "1",
                 "2",
                 "8"
             ]
@@ -71,33 +69,50 @@
             "zipCode": "2000",
             "email": "fedtmule@gmail.com",
             "password": "Fedtmule1234",
-            "description": "Jeg har en hund",
+            "description": "Jeg har er skør",
             "likeIdList": [
                 "5"
             ]
         },
         {
             "id": "8",
-            "name": "Andersine",
-            "dateOfBirth": "2020-10-30",
+            "name": "Pluto",
+            "dateOfBirth": "2021-01-02",
             "zipCode": "2000",
-            "email": "andersine@gmail.com",
-            "password": "Andersine1234",
-            "description": "Jeg er kæreste med Anders And",
+            "email": "pluto@gmail.com",
+            "password": "Pluto1234",
+            "description": "Vuf",
             "likeIdList": [
+                "4",
+                "3",
                 "2"
             ]
         },
         {
             "id": "9",
-            "name": "Pluto",
-            "dateOfBirth": "4444-03-22",
-            "zipCode": "2000",
-            "email": "pluto@gmail.com",
-            "password": "Pluto1234",
-            "description": "Min ejer hedder Fedtmule",
+            "name": "Joachim Von And",
+            "dateOfBirth": "2020-12-15",
+            "zipCode": "7890",
+            "email": "joachim@gmail.com",
+            "password": "Joachim1234",
+            "description": "Jeg er stinkende rig",
             "likeIdList": [
-                "2"
+                "7",
+                "3",
+                "6"
+            ]
+        },
+        {
+            "id": "10",
+            "name": "Mickey Mouse",
+            "dateOfBirth": "2020-12-16",
+            "zipCode": "1234",
+            "email": "mickeymouse@gmail.com",
+            "password": "Mickey1234",
+            "description": "Hæ",
+            "likeIdList": [
+                "8",
+                "9"
             ]
         }
     ]
