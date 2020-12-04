@@ -319,11 +319,10 @@
                         }
 
                         this.likeSuggestedUser = await response.json();
-                        /*
-                        if (mutualLike == true) {
+                
+                        if (this.likeSuggestedUser.mutualLike == true) {
                             return alert('I har matchet med hinanden!');
                         }
-                        */
                     })
                     .catch(error => {
                         alert(error);
@@ -391,7 +390,7 @@
                     
                     this.showContainer='MyProfile';
                 },
-/*
+
                 createNewUser: function () {
                     var requestOptions = {
                         method: "POST", //CREATE
@@ -418,7 +417,6 @@
                         alert(error);
                     });
                 }
-                */
             },
             
             computed: {

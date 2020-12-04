@@ -10,7 +10,10 @@
             "password": "Anders1234",
             "description": "Jeg er altid sur",
             "likeIdList": [
-                "3"
+                "3",
+                "8",
+                "7",
+                "10"
             ]
         },
         {
@@ -47,7 +50,8 @@
             "password": "Rap1234",
             "description": "Jeg har to brødre",
             "likeIdList": [
-                "3"
+                "3",
+                "2"
             ]
         },
         {
@@ -59,7 +63,7 @@
             "password": "Rup1234",
             "description": "Jeg har to brødre",
             "likeIdList": [
-                "4"
+                "2"
             ]
         },
         {
@@ -71,7 +75,8 @@
             "password": "Fedtmule1234",
             "description": "Jeg har er skør",
             "likeIdList": [
-                "5"
+                "5",
+                "2"
             ]
         },
         {
@@ -99,7 +104,7 @@
             "likeIdList": [
                 "7",
                 "3",
-                "6"
+                "2"
             ]
         },
         {
