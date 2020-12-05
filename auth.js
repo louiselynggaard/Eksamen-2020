@@ -40,7 +40,6 @@ exports.giveToken = function (id, email, name) { //bygger token med indhold: id,
     return jwtToken;
 }
 
-
 exports.isTokenValid = function (email, token) { //verificerer token 
     let success = null;
     let privateKey = fs.readFileSync('./private.pem', 'utf8');

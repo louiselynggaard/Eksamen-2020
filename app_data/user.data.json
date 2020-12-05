@@ -1,5 +1,5 @@
 {
-    "lastUserId": 10,
+    "lastUserId": 12,
     "userList": [
         {
             "id": "2",
@@ -13,7 +13,8 @@
                 "3",
                 "8",
                 "7",
-                "10"
+                "10",
+                "9"
             ]
         },
         {
@@ -26,7 +27,8 @@
             "description": "Jeg kan lide at danse",
             "likeIdList": [
                 "2",
-                "8"
+                "8",
+                "11"
             ]
         },
         {
@@ -108,17 +110,26 @@
             ]
         },
         {
-            "id": "10",
+            "id": "11",
             "name": "Mickey Mouse",
-            "dateOfBirth": "2020-12-16",
-            "zipCode": "1234",
-            "email": "mickeymouse@gmail.com",
+            "dateOfBirth": "2020-12-10",
+            "zipCode": "2000",
+            "email": "mickeymouse@mail.dk",
             "password": "Mickey1234",
-            "description": "Hæ",
+            "description": "En mus i røde shorts.",
             "likeIdList": [
-                "8",
-                "9"
+                "3",
+                "2"
             ]
+        },
+        {
+            "id": "12",
+            "name": "Fedtmule",
+            "dateOfBirth": "1935-09-05",
+            "zipCode": "2000",
+            "email": "fedtmule@gmail.com",
+            "password": "Fedtmule1234",
+            "likeIdList": []
         }
     ]
 }
