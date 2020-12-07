@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dating App</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.js"></script> <!--Forudsætning for at bruge Vue-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.js"></script>
+    <!--Forudsætning for at bruge Vue-->
     <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
     <div id="app">
         <div class="loginHeader" v-if="showContainer!='Login' && showContainer!='Create'">
             <h1>Dating app</h1>
-            <span style="position: absolute; top: 4px; right: 4px;">{{this.loginUser.name}}</span> <!--Viser hvilken bruger, der er logget ind-->
+            <span style="position: absolute; top: 4px; right: 4px;">{{this.loginUser.name}}</span>
+            <!--Viser hvilken bruger, der er logget ind-->
         </div>
 
         <div class="navbar" v-if="showContainer!='Login' && showContainer!='Create'">
@@ -31,8 +35,10 @@
             <div v-if="showContainer=='Login'">
                 <div>
                     <form @submit.prevent="clickLogin()">
-                        <label class="label1"><span>Email</span><input type="email" v-model="loginUser.email" required></label><br>
-                        <label class="label1"><span>Password</span><input type="password" v-model="loginUser.password" required></label><br>
+                        <label class="label1"><span>Email</span><input type="email" v-model="loginUser.email"
+                                required></label><br>
+                        <label class="label1"><span>Password</span><input type="password" v-model="loginUser.password"
+                                required></label><br>
 
                         <div style="text-align: left;">
                             <button type="submit">Login</button>
@@ -40,23 +46,31 @@
                     </form>
 
                     <div style="text-align: left;">
-                        <p>Ikke bruger endnu?</p><div><button @click="showContainer='Create'">Opret dig her</button></div>
+                        <p>Ikke bruger endnu?</p>
+                        <div><button @click="showContainer='Create'">Opret dig her</button></div>
                     </div>
-                </div>    
+                </div>
             </div>
 
             <div v-if="showContainer=='Create'">
                 <div>
-                    <form @submit.prevent="clickCreate()"> <!--Formen submittes ikke - i stedet kører funktionen clickCreate(). Form-tagget skyldes brug af "required"-->
-                        <label class="label1"><span>Navn</span><input type="text" v-model="createUser.name" required></label><br>
-                        <label class="label1"><span>Fødselsdag</span><input type="date" v-model="createUser.dateOfBirth" required></label><br>
-                        <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode" required></label><br>
-                        <label class="label1"><span>Email</span><input type="email" v-model="createUser.email" required></label><br>
-                        <label class="label1"><span>Password</span><input type="password" v-model="createUser.password" required></label><br>
-                        <label class="label1"><span>Beskriv dig selv</span><input type="text" v-model="createUser.description" required></label><br>
+                    <form @submit.prevent="clickCreate()">
+                        <!--Formen submittes ikke - i stedet kører funktionen clickCreate(). Form-tagget skyldes brug af "required"-->
+                        <label class="label1"><span>Navn</span><input type="text" v-model="createUser.name"
+                                required></label><br>
+                        <label class="label1"><span>Fødselsdag</span><input type="date" v-model="createUser.dateOfBirth"
+                                required></label><br>
+                        <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode"
+                                required></label><br>
+                        <label class="label1"><span>Email</span><input type="email" v-model="createUser.email"
+                                required></label><br>
+                        <label class="label1"><span>Password</span><input type="password" v-model="createUser.password"
+                                required></label><br>
+                        <label class="label1"><span>Beskriv dig selv</span><input type="text"
+                                v-model="createUser.description" required></label><br>
 
                         <div style="text-align: left;">
-                            <button type="submit">Opret bruger</button>            
+                            <button type="submit">Opret bruger</button>
                         </div>
                     </form>
 
@@ -68,21 +82,27 @@
 
             <div v-if="showContainer=='FrontPage'">
                 <img src="../img/unknown.jpg" style="width: 200px;"><br>
-                <label class="label1"><span>{{suggestedUser.name}}, {{suggestedUser.dateOfBirth}}, {{suggestedUser.zipCode}}, {{suggestedUser.description}}</span></label>
+                <label class="label1"><span>{{suggestedUser.name}}, {{suggestedUser.dateOfBirth}},
+                        {{suggestedUser.zipCode}}, {{suggestedUser.description}}</span></label>
                 <div style="text-align: left;">
                     <button @click="clickLike(suggestedUser.id)">Like</button>
-                    <button @click="clickDislike()">Dislike</button> 
+                    <button @click="clickDislike()">Dislike</button>
                 </div>
             </div>
 
             <div v-if="showContainer=='MyProfile'">
                 <div class="label1">
                     <template v-if="updateUser != null">
-                        <label class="label1"><span>Navn:</span><input type="text" v-model="updateUser.name" required></label><br>
-                        <label class="label1"><span>Fødselsdag:</span><input type="date" v-model="updateUser.dateOfBirth" required></label><br>
-                        <label class="label1"><span>Postnummer:</span><input type="text" v-model="updateUser.zipCode" required></label><br>
-                        <label class="label1"><span>Email:</span><input type="email" v-model="updateUser.email" required></label><br>
-                        <label class="label1"><span>Beskriv dig selv:</span><input type="text" v-model="updateUser.description" required></label><br>
+                        <label class="label1"><span>Navn:</span><input type="text" v-model="updateUser.name"
+                                required></label><br>
+                        <label class="label1"><span>Fødselsdag:</span><input type="date"
+                                v-model="updateUser.dateOfBirth" required></label><br>
+                        <label class="label1"><span>Postnummer:</span><input type="text" v-model="updateUser.zipCode"
+                                required></label><br>
+                        <label class="label1"><span>Email:</span><input type="email" v-model="updateUser.email"
+                                required></label><br>
+                        <label class="label1"><span>Beskriv dig selv:</span><input type="text"
+                                v-model="updateUser.description" required></label><br>
                     </template>
 
                     <div class="label1">
@@ -100,9 +120,10 @@
                     <div class="label1">
                         <button @click="clickLikesList">Brugere jeg har liket</button><br>
                         <div v-for="elm in likesListResult">
-                            <span>name: {{elm.name}}, dateOfBirth: {{elm.dateOfBirth}}, zipCode: {{elm.zipCode}}, match: {{elm.match}}</span>
+                            <span>name: {{elm.name}}, dateOfBirth: {{elm.dateOfBirth}}, zipCode: {{elm.zipCode}}, match:
+                                {{elm.match}}</span>
                             <button @click="clickDeleteLike(elm.id)">Slet</button>
-                        </div>                           
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,7 +133,7 @@
     <script>
         var vm = new Vue({
             el: '#app',
-            mounted() { //første kald, når klassen og siden "monteres/starter"
+            mounted() { //første kald, når klassen og siden "monteres"/starter
                 this.loginUser.email = this.getCookie('email'); //cookies hentes, hvis de findes
                 this.loginUser.token = this.getCookie('token');
                 if (this.loginUser.email !== '' && this.loginUser.token !== '') { //hvis begge dele findes, kaldes clickLogin-funktion
@@ -120,7 +141,7 @@
                 }
             },
             methods: {
-                getCookie: function (cname) { //henter cookie via navn https://www.w3schools.com/js/js_cookies.asp
+                getCookie: function (cname) { //henter cookie via navn - hjælp til kode fundet her: https://www.w3schools.com/js/js_cookies.asp
                     var name = cname + "=";
                     var decodedCookie = decodeURIComponent(document.cookie);
                     var ca = decodedCookie.split(';');
@@ -153,35 +174,35 @@
 
                     this.error = null;
                     fetch('api/user/login', requestOptions)
-                    .then(async response => {
+                        .then(async response => {
 
-                        if (!response.ok) {
-                            const data = await response.text();
-                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                            return Promise.reject(error);
-                        }
+                            if (!response.ok) {
+                                const data = await response.text();
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error);
+                            }
 
-                        this.loginUser.password = ''; //ingen grund til det er synligt i browseren
+                            this.loginUser.password = ''; //ingen grund til det er synligt i browseren
 
-                        let loginData = await response.json();
-                        this.loginUser.name = loginData.name;
-                        this.loginUser.token = loginData.token; //gemmer token til senere API-kald
-                        
-                        //gemmer værdier i objektet til 'MyProfil'
-                        this.updateUser.name = loginData.name;
-                        this.updateUser.dateOfBirth = loginData.dateOfBirth;
-                        this.updateUser.zipCode = loginData.zipCode;
-                        this.updateUser.email = loginData.email;
-                        this.updateUser.description = loginData.description;
+                            let loginData = await response.json();
+                            this.loginUser.name = loginData.name;
+                            this.loginUser.token = loginData.token; //gemmer token til senere API-kald
 
-                        this.updateLoginCookie(true); //gemmer logindata i cookie
+                            //gemmer værdier i objektet til 'MyProfil'
+                            this.updateUser.name = loginData.name;
+                            this.updateUser.dateOfBirth = loginData.dateOfBirth;
+                            this.updateUser.zipCode = loginData.zipCode;
+                            this.updateUser.email = loginData.email;
+                            this.updateUser.description = loginData.description;
 
-                        this.showSuggestedUser();
-                        this.showContainer = 'FrontPage';
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+                            this.updateLoginCookie(true); //gemmer logindata i cookie
+
+                            this.showSuggestedUser();
+                            this.showContainer = 'FrontPage';
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 clickLogout: function () {
@@ -192,35 +213,35 @@
 
                 clickLikesList: function () {
                     var requestOptions = {
-                    method: 'GET',
-                    headers: { 'Authorization': 'Bearer ' + this.loginUser.token }
-                };
+                        method: 'GET',
+                        headers: { 'Authorization': 'Bearer ' + this.loginUser.token }
+                    };
 
-                this.error = null;
-                // GET request using fetch with error handling
-                fetch('/api/user/likes/list', requestOptions)
-                .then(async response => {
+                    this.error = null;
+                    // GET request using fetch with error handling
+                    fetch('/api/user/likes/list', requestOptions)
+                        .then(async response => {
 
-                    // check for error response
-                    if (!response.ok) {
-                        const data = await response.text();
-                        // get error message from body or default to response statusText
-                        const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                        return Promise.reject(error); // throw error to catch
-                    }
+                            // check for error response
+                            if (!response.ok) {
+                                const data = await response.text();
+                                // get error message from body or default to response statusText
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error); // throw error to catch
+                            }
 
-                    this.likesListResult = await response.json();
-                })
-                .catch(error => {
-                    alert(error);
-                });
+                            this.likesListResult = await response.json();
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 clickLike: function (id) {
                     this.likeUser(id);
                     this.showSuggestedUser();
                 },
-                
+
                 clickDislike: function () {
                     this.showSuggestedUser();
                 },
@@ -233,19 +254,19 @@
 
                     this.error = null;
                     fetch('/api/user/suggested/match', requestOptions)
-                    .then(async response => {
+                        .then(async response => {
 
-                        if(!response.ok) {
-                            const data = await response.text();
-                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                            return Promise.reject(error);
-                        }
+                            if (!response.ok) {
+                                const data = await response.text();
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error);
+                            }
 
-                        this.suggestedUser = await response.json();
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+                            this.suggestedUser = await response.json();
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 clickCreate: function () {
@@ -254,141 +275,141 @@
                         headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indicates the content. UTF-8 = der kan skrive æøå
                         body: JSON.stringify(this.createUser)
                     };
-                    
+
                     this.error = null;
                     fetch('/api/user/create', requestOptions)
-                    .then(async response => {
+                        .then(async response => {
 
-                        //tjekker om der er fejl i svaret
-                        if (!response.ok) { //hvis der fås et svar med statuskode >299 = fejl
-                            const data = await response.text(); //svaret kommer retur som tekst og ikke en JSON-fil = fejl
-                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                            return Promise.reject(error); //throw error to catch
-                        }
+                            //tjekker om der er fejl i svaret
+                            if (!response.ok) { //hvis der fås et svar med statuskode >299 = fejl
+                                const data = await response.text(); //svaret kommer retur som tekst og ikke en JSON-fil = fejl
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error); //throw error to catch
+                            }
 
-                        const data = await response.json();
-                        this.createUser = data;
-                        this.showContainer='Login';
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+                            const data = await response.json();
+                            this.createUser = data;
+                            this.showContainer = 'Login';
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 clickUpdate: function () {
                     var requestOptions = {
-                    method: 'PUT',
-                    headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token }, // Indicates the content 
-                    body: JSON.stringify(this.updateUser)
-                };
+                        method: 'PUT',
+                        headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token }, // Indicates the content 
+                        body: JSON.stringify(this.updateUser)
+                    };
 
-                this.error = null;
-                fetch('/api/user/update/', requestOptions)
-                .then(async response => {
+                    this.error = null;
+                    fetch('/api/user/update/', requestOptions)
+                        .then(async response => {
 
-                    // check for error response
-                    if (!response.ok) {
-                        const data = await response.text();
-                        // get error message from body or default to response statusText
-                        const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                        return Promise.reject(error); // throw error to catch
-                    }
+                            // check for error response
+                            if (!response.ok) {
+                                const data = await response.text();
+                                // get error message from body or default to response statusText
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error); // throw error to catch
+                            }
 
-                    this.updateUser = await response.json();
-                })
-                .catch(error => {
-                    alert(error);
-                });
+                            this.updateUser = await response.json();
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 likeUser: function (id) {
                     var requestOptions = {
                         method: 'PUT',
                         headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token },
-                        body: JSON.stringify({id: id})
+                        body: JSON.stringify({ id: id })
                     };
 
                     this.error = null;
                     fetch('/api/user/like/suggested/user', requestOptions)
-                    .then(async response => {
+                        .then(async response => {
 
-                        if(!response.ok) {
-                            const data = await response.text();
-                            const error = response.stat + ': ' + ((data && data.message) || response.statusText);
-                            return Promise.reject(error);
-                        }
+                            if (!response.ok) {
+                                const data = await response.text();
+                                const error = response.stat + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error);
+                            }
 
-                        this.likeSuggestedUser = await response.json();
-                
-                        if (this.likeSuggestedUser.mutualLike == true) {
-                            return alert('I har matchet med hinanden!');
-                        }
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+                            this.likeSuggestedUser = await response.json();
+
+                            if (this.likeSuggestedUser.mutualLike == true) {
+                                return alert('I har matchet med hinanden!');
+                            }
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 clickDeleteLike: function (id) {
                     var requestOptions = {
                         method: 'DELETE',
                         headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token },
-                        body: JSON.stringify({id: id})
+                        body: JSON.stringify({ id: id })
                     };
 
                     this.error = null;
                     fetch('api/user/likes/delete', requestOptions)
-                    .then(async response => {
-                        if (!response.ok) {
-                            const data = await response.text();
-                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                            return Promise.reject(error);
-                        }
+                        .then(async response => {
+                            if (!response.ok) {
+                                const data = await response.text();
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error);
+                            }
 
-                        //this.likesListResult = await response.json();
-                        this.clickLikesList();
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+                            //this.likesListResult = await response.json();
+                            this.clickLikesList();
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 clickDelete: function () {
                     var requestOptions = {
-                    method: 'DELETE',
-                    headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token }
+                        method: 'DELETE',
+                        headers: { 'Content-type': 'application/json; charset=UTF-8', 'Authorization': 'Bearer ' + this.loginUser.token }
                     };
 
                     this.error = null;
                     fetch('/api/user/delete', requestOptions)
-                    .then(async response => {
+                        .then(async response => {
 
-                        // check for error response
-                        if (!response.ok) {
-                            const data = await response.text();
-                            // get error message from body or default to response statusText
-                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                            return Promise.reject(error); // throw error to catch
-                        }
-                        this.loginUser.token = '';
-                        this.updateLoginCookie(false); // Delete login data in cookie
+                            // check for error response
+                            if (!response.ok) {
+                                const data = await response.text();
+                                // get error message from body or default to response statusText
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error); // throw error to catch
+                            }
+                            this.loginUser.token = '';
+                            this.updateLoginCookie(false); // Delete login data in cookie
 
-                        //const data = await response.json();
-                        this.showContainer="Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+                            //const data = await response.json();
+                            this.showContainer = "Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 },
 
                 setFrontPage: function () {
-                    this.showContainer='FrontPage';
+                    this.showContainer = 'FrontPage';
                     this.showSuggestedUser();
                 },
-                
+
                 clickMyProfile: function () {
-                    
-                    this.showContainer='MyProfile';
+
+                    this.showContainer = 'MyProfile';
                 },
 
                 createNewUser: function () {
@@ -397,28 +418,28 @@
                         headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indicates the content. UTF-8 = der kan skrive æøå
                         body: JSON.stringify(this.createUser)
                     };
-                    
+
                     this.error = null;
                     fetch('/api/user/create', requestOptions)
-                    .then(async response => {
+                        .then(async response => {
 
-                        //tjekker om der er fejl i svaret
-                        if (!response.ok) { //hvis der fås et svar med statuskode >299 = fejl
-                            const data = await response.text(); //svaret kommer retur som tekst og ikke en JSON-fil = fejl
-                            const error = response.status + ': ' + ((data && data.message) || response.statusText);
-                            return Promise.reject(error); //throw error to catch
-                        }
+                            //tjekker om der er fejl i svaret
+                            if (!response.ok) { //hvis der fås et svar med statuskode >299 = fejl
+                                const data = await response.text(); //svaret kommer retur som tekst og ikke en JSON-fil = fejl
+                                const error = response.status + ': ' + ((data && data.message) || response.statusText);
+                                return Promise.reject(error); //throw error to catch
+                            }
 
-                        const data = await response.json();
-                        this.createUser = data;
-                        this.showContainer='Login';
-                    })
-                    .catch(error => {
-                        alert(error);
-                    });
+                            const data = await response.json();
+                            this.createUser = data;
+                            this.showContainer = 'Login';
+                        })
+                        .catch(error => {
+                            alert(error);
+                        });
                 }
             },
-            
+
             computed: {
                 pageTitle: function () { //hvis følgende container er kaldt, ændres sidens titel herefter.
                     if (this.showContainer == 'Login') return '<span style="font-size:24px">Velkommen</span><br/>Udfyld følgende form for at logge ind';
@@ -473,4 +494,5 @@
         });
     </script>
 </body>
+
 </html>

@@ -19,9 +19,11 @@ function writeUserData() { //overskriver alt hvad der er i user.data.json med ny
     });
 };
 
+/*
 function getMyIndex(req) { //index på aktiv login-bruger er hårdkodet for at oprette resterende funktioner
     return 0;
 };
+*/
 
 var userData = readUserData(); //variablen userData oprettes ud fra det funktionen finder i json-filen/"databasen" user.data.json
 
