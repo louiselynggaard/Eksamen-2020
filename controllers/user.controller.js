@@ -19,6 +19,19 @@ function writeUserData() { //overskriver alt hvad der er i user.data.json med ny
     });
 };
 
+function isDate(date) {
+    return (new Date(date) !== "invalid date") && !isNaN(new Date(date));
+};
+
+function isNumeric(num) {
+    return !isNaN(num);
+};
+
+function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+};
+
 /*
 function getMyIndex(req) { //index på aktiv login-bruger er hårdkodet for at oprette resterende funktioner
     return 0;
@@ -43,7 +56,7 @@ exports.user_test = function (req, res) { // Testfunktion der viser indhold af t
 exports.user_likes_list = function (req, res) {
     //Hvilket id/index har jeg?
     let myId = req._customTokenData.id; //eget id hentes fra token
-    let myUser = userData.userList.find(x => x.id === myId); //finder user i userData database
+    let myUser = userData.userList.find(x => x.id === myId); //finder egen user i userData database
     
     //For loop, der gennemgår alle i databasen
     let responseList = [];
@@ -57,7 +70,8 @@ exports.user_likes_list = function (req, res) {
         if (myUser.likeIdList.includes(otherUser.id)) {
             let mutualMatch = otherUser.likeIdList.includes(myId); //true hvis otherUser har liket mig
             
-            responseList.push({id: otherUser.id, name: otherUser.name, dateOfBirth: otherUser.dateOfBirth, zipCode: otherUser.zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
+            responseList.push({id: otherUser.id, name: otherUser.name, dateOfBirth: otherUser.dateOfBirth, 
+                zipCode: otherUser.zipCode, match: mutualMatch}); //objektet indeholder kun tilgængeligt data
         }
     }
     //Returner nyt array
@@ -130,6 +144,31 @@ exports.user_create = function (req, res) {
         req.body.description
     );
 
+    if (req.body.name.trim() == '') {
+        res.status(400).send('name missing');
+        return;
+    }
+    if (!isDate(req.body.dateOfBirth)) {
+        res.status(400).send('date error');
+        return;
+    }
+    if (!isNumeric(req.body.zipCode)) {
+        res.status(400).send('zipcode is not numeric');
+        return;
+    }
+    if (!validateEmail(req.body.email)) {
+        res.status(400).send('email error');
+        return;
+    }
+    if (req.body.password.trim() == '') {
+        res.status(400).send('password missing');
+        return;
+    }
+    if (req.body.description == null || req.body.description.trim() == '') {
+        res.status(400).send('description missing');
+        return;
+    }
+
     userData.userList.push(user); //indsæt som statisk data i JSON-fil
     console.log('user_create, user:', user); //det logges i consolen, at der er oprettet en ny bruger
 
@@ -187,15 +226,17 @@ exports.user_likes_delete = function (req, res) {
 
     //Hvem vil jeg slette?
     let suggestedUser = req.body.id;
-
     let index = myUser.likeIdList.findIndex(x => x === suggestedUser);
 
+    //Hvordan slettes vedkommende?
     if(index != -1) {
         myUser.likeIdList.splice(index,1);
     }
 
+    //databsen opdateres
     writeUserData();
 
+    //JSON-objekt returneres
     res.send(myUser.likeIdList);
 };
 

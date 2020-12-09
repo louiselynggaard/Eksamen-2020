@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dating App</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.js"></script>
-    <!--Forudsætning for at bruge Vue-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.js"></script> <!--Forudsætning for at bruge Vue-->
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -60,7 +59,7 @@
                                 required></label><br>
                         <label class="label1"><span>Fødselsdag</span><input type="date" v-model="createUser.dateOfBirth"
                                 required></label><br>
-                        <label class="label1"><span>Postnummer</span><input type="text" v-model="createUser.zipCode"
+                        <label class="label1"><span>Postnummer</span><input type="number" v-model="createUser.zipCode"
                                 required></label><br>
                         <label class="label1"><span>Email</span><input type="email" v-model="createUser.email"
                                 required></label><br>
