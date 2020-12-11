@@ -1,3 +1,4 @@
+//Middleware
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
@@ -36,14 +37,16 @@ exports.isAuthenticated = function (req, res, next) { //https://tutorialedge.net
 
 exports.giveToken = function (id, email, name) { //bygger token med indhold: id, email, name
     let privateKey = fs.readFileSync('./private.pem', 'utf8');
-    let jwtToken = jwt.sign({ id: id, email: email, name: name }, privateKey, { algorithm: 'HS256', expiresIn: '7d'}); // token er gyldig i 7 døgn - herefter 401 Unauthorized
+    let jwtToken = jwt.sign({ id: id, email: email, name: name }, privateKey, 
+        { algorithm: 'HS256', expiresIn: '7d'}); // token er gyldig i 7 døgn - herefter 401 Unauthorized
     return jwtToken;
 }
 
 exports.isTokenValid = function (email, token) { //verificerer token 
     let success = null;
     let privateKey = fs.readFileSync('./private.pem', 'utf8');
-    jwt.verify(token, privateKey, { algorithm: "HS256" }, (err, tokenData) => {  //algoritme HS256 bruges ved aflæsning og bygning af token = krypteringsalgoritme        
+    jwt.verify(token, privateKey, { algorithm: "HS256" }, (err, tokenData) => {  
+        //algoritme HS256 bruges ved aflæsning og bygning af token = krypteringsalgoritme        
         if (err) 
             success = false; //token ikke valid
         else

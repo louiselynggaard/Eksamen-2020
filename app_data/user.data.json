@@ -1,5 +1,5 @@
 {
-    "lastUserId": 18,
+    "lastUserId": 17,
     "userList": [
         {
             "id": "2",
@@ -10,10 +10,8 @@
             "password": "Anders1234",
             "description": "Jeg er altid sur",
             "likeIdList": [
-                "3",
-                "8",
-                "7",
-                "10",
+                "4",
+                "5",
                 "9"
             ]
         },
@@ -110,7 +108,7 @@
             ]
         },
         {
-            "id": "11",
+            "id": "10",
             "name": "Mickey Mouse",
             "dateOfBirth": "2020-12-10",
             "zipCode": "2000",
@@ -123,40 +121,34 @@
             ]
         },
         {
-            "id": "12",
+            "id": "11",
             "name": "Fedtmule",
             "dateOfBirth": "1935-09-05",
             "zipCode": "2000",
             "email": "fedtmule@gmail.com",
             "password": "Fedtmule1234",
-            "likeIdList": []
+            "likeIdList": [
+                "10"
+            ]
         },
         {
-            "id": "13",
-            "name": "Fedtmule",
-            "dateOfBirth": "1935-09-05",
-            "zipCode": "",
-            "email": "fedtmule@gmail.com",
-            "password": "Fedtmule1234",
-            "likeIdList": []
-        },
-        {
-            "id": "14",
-            "name": "",
-            "dateOfBirth": "1935-09-05",
-            "zipCode": "",
-            "email": "fedtmule@gmail.com",
-            "password": "Fedtmule1234",
-            "likeIdList": []
-        },
-        {
-            "id": "18",
-            "name": "Test",
+            "id": "12",
+            "name": "Simba",
             "dateOfBirth": "2020-05-05",
-            "zipCode": "",
-            "email": "fedtmule@gmail.com",
-            "password": "Fedtmule1234",
-            "description": "hey",
+            "zipCode": "4040",
+            "email": "simba@gmail.com",
+            "password": "Simba1234",
+            "description": "ROAR!",
+            "likeIdList": []
+        },
+        {
+            "id": "17",
+            "name": "Simba",
+            "dateOfBirth": "2020-05-05",
+            "zipCode": "4040",
+            "email": "simba@gmail.com",
+            "password": "Simba1234",
+            "description": "ROAR!",
             "likeIdList": []
         }
     ]

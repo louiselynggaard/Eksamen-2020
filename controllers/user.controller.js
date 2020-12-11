@@ -27,7 +27,7 @@ function isNumeric(num) {
     return !isNaN(num);
 };
 
-function validateEmail(email) {
+function validateEmail(email) { //https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript?fbclid=IwAR37mfxZX4HbA6P5VPMeW-FbO1E_BA3B94HlWeRgu7pipJhCOf2HOkWe5Wg
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
 };
@@ -144,23 +144,23 @@ exports.user_create = function (req, res) {
         req.body.description
     );
 
-    if (req.body.name.trim() == '') {
+    if (req.body.name == null || req.body.name.trim() == '') {
         res.status(400).send('name missing');
         return;
     }
-    if (!isDate(req.body.dateOfBirth)) {
+    if (req.body.dateOfBirth == null || !isDate(req.body.dateOfBirth)) {
         res.status(400).send('date error');
         return;
     }
-    if (!isNumeric(req.body.zipCode)) {
+    if (req.body.zipCode == null || !isNumeric(req.body.zipCode)) {
         res.status(400).send('zipcode is not numeric');
         return;
     }
-    if (!validateEmail(req.body.email)) {
+    if (req.body.email == null || !validateEmail(req.body.email)) {
         res.status(400).send('email error');
         return;
     }
-    if (req.body.password.trim() == '') {
+    if (req.body.password == null || req.body.password.trim() == '') {
         res.status(400).send('password missing');
         return;
     }
