@@ -1,5 +1,5 @@
+//MIDDLEWARE
 const fs = require('fs'); //node.js filesystem gør det muligt at læse, oprette, opdatere, slette filer
-
 const User = require('../models/user.model'); //klasse hentes fra denne mappe.
 const auth = require('../auth.js'); // middleware auth
 
@@ -19,20 +19,20 @@ function writeUserData() { //overskriver alt hvad der er i user.data.json med ny
     });
 };
 
-function isDate(date) {
+function isDate(date) { //tjekker for valid dato
     return (new Date(date) !== "invalid date") && !isNaN(new Date(date));
 };
 
-function isNumeric(num) {
+function isNumeric(num) { //tjekker for reelt tal
     return !isNaN(num);
 };
 
-function validateEmail(email) { //https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript?fbclid=IwAR37mfxZX4HbA6P5VPMeW-FbO1E_BA3B94HlWeRgu7pipJhCOf2HOkWe5Wg
+function validateEmail(email) { //tjekker for email med krav - kode fundet her: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript?fbclid=IwAR37mfxZX4HbA6P5VPMeW-FbO1E_BA3B94HlWeRgu7pipJhCOf2HOkWe5Wg
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
 };
 
-/*
+/* BRUGES IKKE LÆNGERE. Blev anvendt til at udvikle resterende funktioner før der var implementeret JWT og Cookies.
 function getMyIndex(req) { //index på aktiv login-bruger er hårdkodet for at oprette resterende funktioner
     return 0;
 };
@@ -41,7 +41,7 @@ function getMyIndex(req) { //index på aktiv login-bruger er hårdkodet for at o
 var userData = readUserData(); //variablen userData oprettes ud fra det funktionen finder i json-filen/"databasen" user.data.json
 
 //READ
-exports.user_test = function (req, res) { // Testfunktion der viser indhold af token
+exports.user_test = function (req, res) { // Testfunktion der viser indhold af token. Testet i Postman
 
     if (req._customTokenData == undefined) {
         res.send("token data: NO TOKEN");
@@ -108,13 +108,13 @@ exports.suggested_match = function (req, res) {
 exports.user_login = function (req, res) {
     let user = userData.userList.find(x => x.email === req.body.email); // find user in userData database
 
-    if (user == undefined) { // user with email not found
+    if (user == undefined) { // bruger ikke fundet med denne email
         res.status(404).send(); // 404 Not Found
         return;
     }
 
-    if (req.body.token != null && req.body.token != '') { // Login by
-        if ( auth.isTokenValid(req.body.email, req.body.token) == false ) { // Token is not valid or email mismatch
+    if (req.body.token != null && req.body.token != '') { // Login af
+        if ( auth.isTokenValid(req.body.email, req.body.token) == false ) { // Token er invalid eller der er email mismatch
             res.status(401).send(); // 401 Unauthorized
             return;
         }
@@ -123,7 +123,7 @@ exports.user_login = function (req, res) {
         return;
     }
 
-    if (user.password != req.body.password) { // not password match
+    if (user.password != req.body.password) { // password stemmer ikke
         res.status(401).send(); // 401 Unauthorized
         return;
     }
@@ -136,7 +136,7 @@ exports.user_create = function (req, res) {
 
     let user = new User( //der oprettes en ny bruger på baggrund af klassen "User" i user.model.js
         (++userData.lastUserId).toString(), //når der oprettes en ny bruger, tildeles den et id, som tæller fra de i forvejen oprettede brugeres id'er. 
-        req.body.name, //her bruges body-parser, som er en udvidelse af Express
+        req.body.name, //her bruges body-parser, som er en udvidelse til biblioteket Express
         req.body.dateOfBirth,
         req.body.zipCode,
         req.body.email,
@@ -144,6 +144,7 @@ exports.user_create = function (req, res) {
         req.body.description
     );
 
+    //"Hjælpefunktioner" anvendes for at tjekke at req har korrekt format
     if (req.body.name == null || req.body.name.trim() == '') {
         res.status(400).send('name missing');
         return;
@@ -193,7 +194,7 @@ exports.user_update = function (req, res) {
 
     console.log('user_update, user:', myUser);
 
-    writeUserData();
+    writeUserData(); //opdateres i databasen
 
     res.send(myUser);
 };

@@ -1,13 +1,12 @@
+//MIDDLEWARE
 const express = require('express');
 const router = express.Router();
-
 const controller = require('../controllers/user.controller');
-
 const auth = require('../auth.js'); // middleware auth
 
 //READ (get)
-router.get('/test', controller.user_test); // READ (get) a simple test url to check that all of our files are communicating correctly
-router.get('/testSecured', auth.isAuthenticated, controller.user_test); // READ (get) Secured with JWTrouter
+router.get('/test', controller.user_test); // READ (get) test, der tjekker at alle filer kommunikerer korrekt.
+router.get('/testSecured', auth.isAuthenticated, controller.user_test); // READ (get) Sikret med JWTrouter
 router.get('/likes/list', auth.isAuthenticated, controller.user_likes_list); // auth = sikret med JWT
 router.get('/suggested/match', auth.isAuthenticated, controller.suggested_match);
 

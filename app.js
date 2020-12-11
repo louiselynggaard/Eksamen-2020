@@ -1,3 +1,4 @@
+//Middleware
 const express = require('express');
 const bodyParser = require('body-parser');
 //const fs = require('fs');
@@ -17,5 +18,5 @@ app.use('/api/user', userRoute);
 
 let port = 3000;
 app.listen(port, () => {
-    console.log('Listening at port ' + port); 
+    console.log('Listening at port ' + port); //hvis der er forbindelse logges det hvilken port der lyttes på
 });

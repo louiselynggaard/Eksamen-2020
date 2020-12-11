@@ -1,6 +1,6 @@
 const http = require('http');
 
-function callCreate(testId, expectedStatusCode, postBody) {
+function callCreate(testId, expectedStatusCode, postBody) { //kilde til anvendt kode: https://stackoverflow.com/questions/6158933/how-is-an-http-post-request-made-in-node-js
 
     var postBodyString = JSON.stringify(postBody);
 
@@ -34,7 +34,7 @@ function callCreate(testId, expectedStatusCode, postBody) {
 }
 
 
-var postBody = 
+var postBody = //test cases fyldes i modellen
 {
     "name":"Timon",
     "dateOfBirth":"2020-10-10",

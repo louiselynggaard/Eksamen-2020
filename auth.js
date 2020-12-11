@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-exports.isAuthenticated = function (req, res, next) { //https://tutorialedge.net/nodejs/nodejs-jwt-authentication-tutorial/
+exports.isAuthenticated = function (req, res, next) { //kilde for følgende funktion: https://tutorialedge.net/nodejs/nodejs-jwt-authentication-tutorial/
     if (typeof req.headers.authorization !== "undefined") {
         // retrieve the authorization header and parse out the
         // JWT using the split function
@@ -21,7 +21,7 @@ exports.isAuthenticated = function (req, res, next) { //https://tutorialedge.net
             }
 
             // add token data to request header 
-            req._customTokenData = tokenData;
+            req._customTokenData = tokenData; //bruges nu når id bestemmes ifb. kald af API'er
 
             // if the JWT is valid, allow them to hit
             // the intended endpoint

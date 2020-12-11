@@ -167,7 +167,7 @@
                 clickLogin: function () {
                     var requestOptions = {
                         method: "POST",
-                        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indicates the content. UTF-8 = der kan skrive æøå
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indikerer  content. UTF-8 = der kan skrive æøå
                         body: JSON.stringify(this.loginUser)
                     };
 
@@ -187,7 +187,7 @@
                             this.loginUser.name = loginData.name;
                             this.loginUser.token = loginData.token; //gemmer token til senere API-kald
 
-                            //gemmer værdier i objektet til 'MyProfil'
+                            //gemmer værdier i objektet til 'MyProfile'
                             this.updateUser.name = loginData.name;
                             this.updateUser.dateOfBirth = loginData.dateOfBirth;
                             this.updateUser.zipCode = loginData.zipCode;
@@ -205,7 +205,7 @@
                 },
 
                 clickLogout: function () {
-                    this.loginUser.token = '';
+                    this.loginUser.token = ''; //token nulstilles ved logout
                     this.updateLoginCookie(false); // Delete login data in cookie
                     this.showContainer = 'Login';
                 },
@@ -217,14 +217,13 @@
                     };
 
                     this.error = null;
-                    // GET request using fetch with error handling
+                    // GET request med fetch
                     fetch('/api/user/likes/list', requestOptions)
                         .then(async response => {
 
-                            // check for error response
+                            // tjekker for fejl
                             if (!response.ok) {
                                 const data = await response.text();
-                                // get error message from body or default to response statusText
                                 const error = response.status + ': ' + ((data && data.message) || response.statusText);
                                 return Promise.reject(error); // throw error to catch
                             }
@@ -236,12 +235,12 @@
                         });
                 },
 
-                clickLike: function (id) {
+                clickLike: function (id) { //ved klik på knappen udføres begge disse funktioner
                     this.likeUser(id);
                     this.showSuggestedUser();
                 },
 
-                clickDislike: function () {
+                clickDislike: function () { //ved klik på knappen udføres denne funktion
                     this.showSuggestedUser();
                 },
 
@@ -255,13 +254,13 @@
                     fetch('/api/user/suggested/match', requestOptions)
                         .then(async response => {
 
-                            if (!response.ok) {
+                            if (!response.ok) { //hvis ikke res er godkendt og korrekt format, returneres en fejl
                                 const data = await response.text();
                                 const error = response.status + ': ' + ((data && data.message) || response.statusText);
                                 return Promise.reject(error);
                             }
 
-                            this.suggestedUser = await response.json();
+                            this.suggestedUser = await response.json(); //variabel bestemt ud fra JSON-response
                         })
                         .catch(error => {
                             alert(error);
@@ -271,7 +270,7 @@
                 clickCreate: function () {
                     var requestOptions = {
                         method: "POST", //CREATE
-                        headers: { 'Content-type': 'application/json; charset=UTF-8' }, //indicates the content. UTF-8 = der kan skrive æøå
+                        headers: { 'Content-type': 'application/json; charset=UTF-8' }, // UTF-8 = der kan skrive æøå
                         body: JSON.stringify(this.createUser)
                     };
 
@@ -306,10 +305,9 @@
                     fetch('/api/user/update/', requestOptions)
                         .then(async response => {
 
-                            // check for error response
+                            // tjekker for fejl i response
                             if (!response.ok) {
                                 const data = await response.text();
-                                // get error message from body or default to response statusText
                                 const error = response.status + ': ' + ((data && data.message) || response.statusText);
                                 return Promise.reject(error); // throw error to catch
                             }
@@ -332,7 +330,7 @@
                     fetch('/api/user/like/suggested/user', requestOptions)
                         .then(async response => {
 
-                            if (!response.ok) {
+                            if (!response.ok) { //tjekker for fejl i response, og om format stemmer
                                 const data = await response.text();
                                 const error = response.stat + ': ' + ((data && data.message) || response.statusText);
                                 return Promise.reject(error);
@@ -340,8 +338,8 @@
 
                             this.likeSuggestedUser = await response.json();
 
-                            if (this.likeSuggestedUser.mutualLike == true) {
-                                return alert('I har matchet med hinanden!');
+                            if (this.likeSuggestedUser.mutualLike == true) { //hvis variablen er true, har begge brugere liket hinanden
+                                return alert('I har matchet med hinanden!'); //der gives besked herom via en alert
                             }
                         })
                         .catch(error => {
@@ -359,13 +357,12 @@
                     this.error = null;
                     fetch('api/user/likes/delete', requestOptions)
                         .then(async response => {
-                            if (!response.ok) {
+                            if (!response.ok) { //tjekker for fejl
                                 const data = await response.text();
                                 const error = response.status + ': ' + ((data && data.message) || response.statusText);
                                 return Promise.reject(error);
                             }
 
-                            //this.likesListResult = await response.json();
                             this.clickLikesList();
                         })
                         .catch(error => {
@@ -383,17 +380,15 @@
                     fetch('/api/user/delete', requestOptions)
                         .then(async response => {
 
-                            // check for error response
+                            // tjekker for fejl
                             if (!response.ok) {
                                 const data = await response.text();
-                                // get error message from body or default to response statusText
                                 const error = response.status + ': ' + ((data && data.message) || response.statusText);
                                 return Promise.reject(error); // throw error to catch
                             }
                             this.loginUser.token = '';
-                            this.updateLoginCookie(false); // Delete login data in cookie
+                            this.updateLoginCookie(false); // Sletter login data i cookie
 
-                            //const data = await response.json();
                             this.showContainer = "Login"; //når det lykkedes at slette sin bruger, kommer man tilbage på login-siden
                         })
                         .catch(error => {
@@ -401,13 +396,12 @@
                         });
                 },
 
-                setFrontPage: function () {
+                setFrontPage: function () { //følgende funktion og container vises 
                     this.showContainer = 'FrontPage';
                     this.showSuggestedUser();
                 },
 
-                clickMyProfile: function () {
-
+                clickMyProfile: function () { //container vises ved tryk på denne knap
                     this.showContainer = 'MyProfile';
                 },
 
@@ -439,7 +433,7 @@
                 }
             },
 
-            computed: {
+            computed: { //en computed variabel der bestemmer sidens titel
                 pageTitle: function () { //hvis følgende container er kaldt, ændres sidens titel herefter.
                     if (this.showContainer == 'Login') return '<span style="font-size:24px">Velkommen</span><br/>Udfyld følgende form for at logge ind';
                     if (this.showContainer == 'Create') return '<span style="font-size:24px">Opret Bruger</span><br/>Udfyld følgende form for at oprette en bruger';
